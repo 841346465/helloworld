@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace framework
 {
-	public partial class Form1 : Form
+	public partial class sysManager : Form
 	{
-		public Form1()
+		public sysManager()
 		{
 			InitializeComponent();
 		}
