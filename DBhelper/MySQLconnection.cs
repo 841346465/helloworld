@@ -12,7 +12,7 @@ namespace DBhelper
     {
         public MySQLconnection()
         {
-            this.Initialize("localhost", "test", "root", "");
+            this.Initialize("192.168.1.235", "test", "root", "");
         }
         /// <summary>  
         /// MySqlConnection连接对象  

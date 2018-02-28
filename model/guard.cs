@@ -71,11 +71,59 @@ namespace model
             List<guard> returnlist = new List<guard>();
 
             conn.OpenConnection();
-            MySql.
+            MySql.Data.MySqlClient.MySqlDataReader reader = conn.GetReader(sql.GuardQueryList);
+            while (reader.Read()) ;
+            {
+                returnlist.Add(new guard()
+                {
+                    name = reader["name"].ToString(),
+                    name = reader["name"].ToString(),
+                    name = reader["name"].ToString(),
+                    name = reader["name"].ToString(),
+                    name = reader["name"].ToString(),
+                    name = reader["name"].ToString(),
+                    name = reader["name"].ToString(),
+                    name = reader["name"].ToString(),
+                    name = reader["name"].ToString(),
+                    name = reader["name"].ToString(),
+                    name = reader["name"].ToString(),
+                    name = reader["name"].ToString(),
+                    name = reader["name"].ToString(),
+                    name = reader["name"].ToString(),
+                    name = reader["name"].ToString(),
+                    name = reader["name"].ToString(),
+                    name = reader["name"].ToString(),
+                    name = reader["name"].ToString(),
+                    name = reader["name"].ToString(),
+                    name = reader["name"].ToString(),
+                    phone,
+                    certificate_num,
+                    service_area,
+                    ID_card,
+                    army,
+                    r_and_p,
+                    address,
+                    Hukou,
+                    contact_way,
+                    political_status,
+                    part_of_company,
+                    serviceunit,
+                    h_and_w,
+                    sex,
+                    soldier,
+                    approve_time,
+                    date_of_birth,
+                    major_skill,
+                    dtraining_record
+
+
+                }
 
 
 
 
+
+            }
         }
 
 
