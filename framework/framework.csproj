@@ -51,16 +51,27 @@
     <Compile Include="framework.Designer.cs">
       <DependentUpon>framework.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="sysManager.cs">
+    <Compile Include="node.cs" />
+    <Compile Include="privManager.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="sysManager.Designer.cs">
-      <DependentUpon>sysManager.cs</DependentUpon>
+    <Compile Include="privManager.Designer.cs">
+      <DependentUpon>privManager.cs</DependentUpon>
     </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="menuManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="menuManager.Designer.cs">
+      <DependentUpon>menuManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="user.cs" />
     <EmbeddedResource Include="framework.resx">
       <DependentUpon>framework.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="privManager.resx">
+      <DependentUpon>privManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -71,9 +82,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="sysManager.resx">
-      <DependentUpon>sysManager.cs</DependentUpon>
+    <EmbeddedResource Include="menuManager.resx">
+      <DependentUpon>menuManager.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Properties\DataSources\user.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

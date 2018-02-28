@@ -20,6 +20,7 @@ namespace framework {
 			addSysMenu();
 			//ipContainer.Text = string.Join(",", ipv4List());
 			ipContainer.Text = getIpv4List().First();
+			
 		}
 
 		private void InitMemuMain() {
@@ -49,26 +50,46 @@ namespace framework {
 
 		private void addSysMenu() {
 			ToolStripMenuItem helper = new ToolStripMenuItem("帮助");
-			ToolStripMenuItem sysManager = new ToolStripMenuItem("系统管理");
-			sysManager.Click += SysManager_Click;
-			helper.DropDownItems.Add(sysManager);
+			ToolStripMenuItem menuManager = new ToolStripMenuItem("菜单管理");
+			menuManager.Click += menuManager_Click;
+			ToolStripMenuItem privManager = new ToolStripMenuItem("权限管理");
+			privManager.Click += privManager_Click;
+
+			helper.DropDownItems.Add(menuManager);
+			helper.DropDownItems.Add(privManager);
 			menuMain.Items.Add(helper);
 		}
 
-		private void SysManager_Click(object sender, EventArgs e) {
-			var tabPage1 = new TabPage();
-			tabControl1.TabPages.Add(tabPage1);
+		private void privManager_Click(object sender, EventArgs e) {
+			var tabPage = new TabPage();
+			tabControl1.TabPages.Add(tabPage);
 
-			var sysForm = new sysManager();
-			sysForm.TopLevel = false;
-			sysForm.FormBorderStyle = FormBorderStyle.None;
-			sysForm.Size = tabPage1.Size;
-			sysForm.Dock = DockStyle.Fill;
+			var privForm = new privManager();
+			privForm.TopLevel = false;
+			privForm.FormBorderStyle = FormBorderStyle.None;
+			privForm.Size = tabPage.Size;
+			privForm.Dock = DockStyle.Fill;
 
-			tabPage1.Controls.Add(sysForm);
-			tabPage1.Text = sysForm.Text;
+			tabPage.Controls.Add(privForm);
+			tabPage.Text = privForm.Text;
 
-			sysForm.Show();
+			privForm.Show();
+		}
+
+		private void menuManager_Click(object sender, EventArgs e) {
+			var tabPage = new TabPage();
+			tabControl1.TabPages.Add(tabPage);
+
+			var menuForm = new menuManager();
+			menuForm.TopLevel = false;
+			menuForm.FormBorderStyle = FormBorderStyle.None;
+			menuForm.Size = tabPage.Size;
+			menuForm.Dock = DockStyle.Fill;
+
+			tabPage.Controls.Add(menuForm);
+			tabPage.Text = menuForm.Text;
+
+			menuForm.Show();
 		}
 
 		private List<string> getIpv4List() {
@@ -86,5 +107,6 @@ namespace framework {
 				tabControl1.TabPages.Remove(tabControl1.SelectedTab);
 			}
 		}
+
 	}
 }
