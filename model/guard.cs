@@ -71,7 +71,7 @@ namespace model
             List<guard> returnlist = new List<guard>();
 
             conn.OpenConnection();
-            MySql
+            MySql.
 
 
 
