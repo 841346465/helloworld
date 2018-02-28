@@ -35,7 +35,5 @@ namespace UI
             r.SetData(listCompany);
             r.Show();
         }
-
-      
     }
 }

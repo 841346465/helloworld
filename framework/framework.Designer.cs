@@ -29,58 +29,64 @@
 		private void InitializeComponent()
 		{
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-			this.menuMain = new System.Windows.Forms.MenuStrip();
 			this.ipContainer = new System.Windows.Forms.ToolStripStatusLabel();
+			this.menuMain = new System.Windows.Forms.MenuStrip();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// statusStrip1
 			// 
+			this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ipContainer});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 490);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 658);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(830, 22);
+			this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
+			this.statusStrip1.Size = new System.Drawing.Size(1107, 25);
 			this.statusStrip1.TabIndex = 1;
 			this.statusStrip1.Text = "statusStrip1";
-			// 
-			// menuMain
-			// 
-			this.menuMain.Location = new System.Drawing.Point(0, 0);
-			this.menuMain.Name = "menuMain";
-			this.menuMain.Size = new System.Drawing.Size(830, 24);
-			this.menuMain.TabIndex = 0;
-			this.menuMain.Text = "menuStrip1";
 			// 
 			// ipContainer
 			// 
 			this.ipContainer.Name = "ipContainer";
-			this.ipContainer.Size = new System.Drawing.Size(19, 17);
+			this.ipContainer.Size = new System.Drawing.Size(22, 20);
 			this.ipContainer.Text = "ip";
+			// 
+			// menuMain
+			// 
+			this.menuMain.ImageScalingSize = new System.Drawing.Size(20, 20);
+			this.menuMain.Location = new System.Drawing.Point(0, 0);
+			this.menuMain.Name = "menuMain";
+			this.menuMain.Padding = new System.Windows.Forms.Padding(8, 3, 0, 3);
+			this.menuMain.Size = new System.Drawing.Size(1107, 24);
+			this.menuMain.TabIndex = 0;
+			this.menuMain.Text = "menuStrip1";
 			// 
 			// tabControl1
 			// 
 			this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.tabControl1.Location = new System.Drawing.Point(0, 27);
+			this.tabControl1.Location = new System.Drawing.Point(0, 28);
+			this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(830, 460);
+			this.tabControl1.Size = new System.Drawing.Size(1107, 621);
 			this.tabControl1.TabIndex = 2;
 			this.tabControl1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.tabControl1_MouseDoubleClick);
 			// 
 			// framework
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(830, 512);
+			this.ClientSize = new System.Drawing.Size(1107, 683);
 			this.Controls.Add(this.tabControl1);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.menuMain);
 			this.MainMenuStrip = this.menuMain;
-			this.MinimumSize = new System.Drawing.Size(720, 480);
+			this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.MinimumSize = new System.Drawing.Size(954, 624);
 			this.Name = "framework";
 			this.Text = "系统";
 			this.Load += new System.EventHandler(this.Form1_Load);

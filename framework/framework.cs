@@ -52,15 +52,15 @@ namespace framework {
 			ToolStripMenuItem helper = new ToolStripMenuItem("帮助");
 			ToolStripMenuItem menuManager = new ToolStripMenuItem("菜单管理");
 			menuManager.Click += menuManager_Click;
-			ToolStripMenuItem privManager = new ToolStripMenuItem("权限管理");
-			privManager.Click += privManager_Click;
+			/*ToolStripMenuItem privManager = new ToolStripMenuItem("权限管理");
+			privManager.Click += privManager_Click;*/
 
 			helper.DropDownItems.Add(menuManager);
-			helper.DropDownItems.Add(privManager);
+			//helper.DropDownItems.Add(privManager);
 			menuMain.Items.Add(helper);
 		}
 
-		private void privManager_Click(object sender, EventArgs e) {
+		/*private void privManager_Click(object sender, EventArgs e) {
 			var tabPage = new TabPage();
 			tabControl1.TabPages.Add(tabPage);
 
@@ -74,7 +74,7 @@ namespace framework {
 			tabPage.Text = privForm.Text;
 
 			privForm.Show();
-		}
+		}*/
 
 		private void menuManager_Click(object sender, EventArgs e) {
 			var tabPage = new TabPage();
