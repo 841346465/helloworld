@@ -68,12 +68,13 @@ namespace model
 
         public List<guard> Querylist()
         {
-            List<guard> returnlist = new List<guard>();
+			/*List<guard> returnlist = new List<guard>();
 
             conn.OpenConnection();
             MySql
 
-
+	*/
+			return null;
 
 
         }
