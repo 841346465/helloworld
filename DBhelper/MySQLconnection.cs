@@ -14,27 +14,7 @@ namespace DBhelper {
 		/// <summary>  
 		/// MySqlConnection连接对象  
 		/// </summary>  
-		private MySqlConnection connection;
-		/// <summary>  
-		/// 服务器地址  
-		/// </summary>  
-		private string server;
-		/// <summary>  
-		/// 数据库实例名称  
-		/// </summary>  
-		private string database;
-		/// <summary>  
-		/// 用户名  
-		/// </summary>    
-		private string uid;
-		/// <summary>  
-		/// 密码  
-		/// </summary>  
-		private string password;
-
-		public MySqlConnection getInstance() {
-			return connection;
-		}
+		private static MySqlConnection conn;
 
 		/// <summary>  
 		/// 初始化mysql连接  
@@ -44,21 +24,23 @@ namespace DBhelper {
 		/// <param name="uid">用户名称</param>  
 		/// <param name="password">密码</param>  
 		public void Initialize(string server, string database, string uid, string password) {
-			this.server = server;
-			this.uid = uid;
-			this.password = password;
-			this.database = database;
-			//string connectionString = "Data Source=" + server + ";" + "port=" + port + ";" + "Database=" + database + ";" + "User Id=" + uid + ";" + "Password=" + password + ";" + "CharSet = utf8"; ;  
-			string connectionString = "server=" + server + ";user id=" + uid + ";password=" + password + ";database=" + database + ";Charset = utf8";
-			connection = new MySqlConnection(connectionString);
+			MySqlConnectionStringBuilder connBuilder = new MySqlConnectionStringBuilder();
+			connBuilder.Server = server;
+			connBuilder.UserID = uid;
+			connBuilder.Password = password;
+			connBuilder.Database = database;
+			connBuilder.CharacterSet = "utf8";
+			connBuilder.IgnorePrepare = false;
+
+			conn = new MySqlConnection(connBuilder.ToString());
 		}
 		/// <summary>  
 		/// 打开数据库连接  
 		/// </summary>  
 		/// <returns>是否成功</returns>  
 		public bool OpenConnection() {
-			if (connection.State != ConnectionState.Open) {
-				connection.Open();
+			if (conn.State != ConnectionState.Open) {
+				conn.Open();
 			}
 			return true;
 		}
@@ -68,21 +50,12 @@ namespace DBhelper {
 		/// </summary>  
 		/// <returns></returns>  
 		public bool CloseConnection() {
-			if (connection.State != ConnectionState.Closed) {
-				connection.Close();
+			if (conn.State != ConnectionState.Closed) {
+				conn.Close();
 			}
 			return true;
 		}
 
-		/// <summary>  
-		/// 构建SQL句柄  
-		/// </summary>  
-		/// <param name="SQL">SQL语句</param>  
-		/// <returns></returns>  
-		private MySqlCommand CreateCmd(string SQL) {
-			MySqlCommand Cmd = new MySqlCommand(SQL, connection);
-			return Cmd;
-		}
 		/// <summary>  
 		/// 根据SQL获取DataTable数据表  
 		/// </summary>  
@@ -90,7 +63,7 @@ namespace DBhelper {
 		/// <param name="Table_name">返回表的表名</param>  
 		/// <returns></returns>  
 		public DataTable GetDataTable(string SQL) {
-			MySqlDataAdapter Da = new MySqlDataAdapter(SQL, connection);
+			MySqlDataAdapter Da = new MySqlDataAdapter(SQL, conn);
 			DataTable dt = new DataTable();
 			Da.Fill(dt);
 			return dt;
@@ -102,7 +75,7 @@ namespace DBhelper {
 		/// <param name="查询语句"></param>  
 		/// <returns>MySqlDataReader对象</returns>  
 		public MySqlDataReader GetReader(string SQL) {
-			MySqlCommand Cmd = new MySqlCommand(SQL, connection);
+			MySqlCommand Cmd = new MySqlCommand(SQL, conn);
 			MySqlDataReader Dr;
 			Dr = Cmd.ExecuteReader(CommandBehavior.Default);
 			return Dr;
@@ -116,7 +89,7 @@ namespace DBhelper {
 		/// <param name="tablename">表名</param>  
 		/// <returns></returns>  
 		public DataSet Get_DataSet(string SQL, DataSet Ds, string tablename) {
-			MySqlDataAdapter Da = new MySqlDataAdapter(SQL, connection);
+			MySqlDataAdapter Da = new MySqlDataAdapter(SQL, conn);
 			Da.Fill(Ds, tablename);
 			return Ds;
 		}
@@ -130,18 +103,36 @@ namespace DBhelper {
 		/// <param name="tablename">表名</param>  
 		/// <returns></returns>  
 		public DataSet GetDataSet(string SQL, DataSet Ds, int StartIndex, int PageSize, string tablename) {
-			MySqlDataAdapter Da = new MySqlDataAdapter(SQL, connection);
+			MySqlDataAdapter Da = new MySqlDataAdapter(SQL, conn);
 			Da.Fill(Ds, StartIndex, PageSize, tablename);
 			return Ds;
 		}
 
 		/// <summary>  
-		/// 增删改数据  
+		/// 增删改数据，不建议此方法因为未能防止sql注入
 		/// </summary>  
 		/// <param name="mySqlCommand"></param>  
 		public int ExecuteNonQuery(string sql) {
-			MySqlCommand mySqlCommand = CreateCmd(sql);
-			return mySqlCommand.ExecuteNonQuery();
+			MySqlCommand cmd = new MySqlCommand(sql, conn);
+			return cmd.ExecuteNonQuery();
+		}
+
+		public int PrepareExceNonQuery(string sql, IEnumerable<KeyValuePair<string, object>> keyValuePairs) {
+			MySqlCommand cmd = new MySqlCommand(sql, conn);
+			cmd.Prepare();
+			foreach (var kv in keyValuePairs) {
+				cmd.Parameters[kv.Key].Value = kv.Value;
+			}
+			return cmd.ExecuteNonQuery();
+		}
+
+		public MySqlDataReader PrepareExecuteReader(string SQL, IEnumerable<KeyValuePair<string, object>> keyValuePairs) {
+			MySqlCommand Cmd = new MySqlCommand(SQL, conn);
+			Cmd.Prepare();
+			foreach (var kv in keyValuePairs) {
+				Cmd.Parameters[kv.Key].Value = kv.Value;
+			}
+			return Cmd.ExecuteReader(CommandBehavior.Default);
 		}
 	}
 }

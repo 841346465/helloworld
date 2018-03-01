@@ -60,7 +60,8 @@ namespace framework {
 			} else {
 				menu.fieldName = listBox1.SelectedItem.ToString();
 				menu.name = tbxMenuName.Text;
-				menu.Insert();
+				model.orm ormInstance= new model.orm();
+				ormInstance.Insert<model.menu>(menu);
 			}
 		}
 	}

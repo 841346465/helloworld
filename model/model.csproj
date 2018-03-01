@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="attributes.cs" />
     <Compile Include="guard.cs" />
     <Compile Include="company.cs" />
     <Compile Include="menu.cs" />
