@@ -8,9 +8,13 @@ using System.Reflection;
 namespace model {
 	public class orm {
 		public orm() {
+			db = DBhelper.databaseManager.GetInstance();
 		}
+		DBhelper.databaseManager db;
 
-		DBhelper.MySQLconnection conn = new DBhelper.MySQLconnection();
+		public void BeginTransaction() { db.BeginTransaction(); }
+		public void Commit() { db.Commit(); }
+		public void Rollback() { db.Rollback(); }
 
 		#region create
 		public int Insert<T>(T data) {
@@ -40,10 +44,7 @@ namespace model {
 			}
 			string sql = "INSERT INTO " + table + "(" + string.Join(",", columns) + ")" + "VALUES" + "(" + string.Join(",", values) + ")";
 
-			conn.OpenConnection();
-			int i = conn.ExecuteNonQuery(sql);
-			conn.CloseConnection();
-			return i;
+			return db.ExecuteNonQuery(sql);
 		}
 		#endregion
 
@@ -93,7 +94,7 @@ namespace model {
 				}
 			}
 			sql += (string.Join(",", sets) + where);
-			return conn.ExecuteNonQuery(sql);
+			return db.ExecuteNonQuery(sql);
 		}
 		#endregion
 
@@ -155,8 +156,7 @@ namespace model {
 					}
 				}
 			}
-			conn.ExecuteNonQuery(sql);
-			return 0;
+			return db.ExecuteNonQuery(sql);
 		}
 		#endregion
 

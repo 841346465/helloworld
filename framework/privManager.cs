@@ -61,7 +61,11 @@ namespace framework {
 				menu.fieldName = listBox1.SelectedItem.ToString();
 				menu.name = tbxMenuName.Text;
 				model.orm ormInstance= new model.orm();
+				ormInstance.BeginTransaction();
 				ormInstance.Insert<model.menu>(menu);
+				menu.id = 100;
+				ormInstance.Insert<model.menu>(menu);
+				ormInstance.Commit();
 			}
 		}
 	}

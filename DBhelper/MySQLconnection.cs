@@ -7,7 +7,7 @@ using MySql.Data.MySqlClient;
 using System.Data;
 
 namespace DBhelper {
-	public class MySQLconnection {
+	public class MySQLconnection  {
 		public MySQLconnection() {
 			this.Initialize("localhost", "test", "root", "");
 		}
@@ -24,15 +24,7 @@ namespace DBhelper {
 		/// <param name="uid">用户名称</param>  
 		/// <param name="password">密码</param>  
 		public void Initialize(string server, string database, string uid, string password) {
-			MySqlConnectionStringBuilder connBuilder = new MySqlConnectionStringBuilder();
-			connBuilder.Server = server;
-			connBuilder.UserID = uid;
-			connBuilder.Password = password;
-			connBuilder.Database = database;
-			connBuilder.CharacterSet = "utf8";
-			connBuilder.IgnorePrepare = false;
-
-			conn = new MySqlConnection(connBuilder.ToString());
+			
 		}
 		/// <summary>  
 		/// 打开数据库连接  
