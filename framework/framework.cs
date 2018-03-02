@@ -27,25 +27,25 @@ namespace framework {
 			new model.menu {  name = "菜单管理", dllName = "framework.exe", fieldName = "framework.menuManager" },
 			new model.menu {  name = "新用户注册", dllName = "framework.exe", fieldName = "framework.register" }
 		};
+		List<model.menu> listMenu = new List<model.menu>();
 
 		#region 测试时代码，正式会删掉
-		List<model.menu> listmenu = new List<model.menu>();
 		private void addMenu() {
-			listmenu.Add(new model.menu { id = 1, name = "节点1", dllName = "UI.dll", fieldName = "UI.CompanyRegister", canOpen = true, parentId = 0, showOrder = 1 });
-			listmenu.Add(new model.menu { id = 2, name = "节点2", parentId = 0, showOrder = 1 });
-			listmenu.Add(new model.menu { id = 3, name = "节点3", parentId = 0, showOrder = 2 });
-			listmenu.Add(new model.menu {
+			listMenu.Add(new model.menu { id = 1, name = "节点1", dllName = "UI.dll", fieldName = "UI.CompanyRegister", canOpen = true, parentId = 0, showOrder = 1 });
+			listMenu.Add(new model.menu { id = 2, name = "节点2", parentId = 0, showOrder = 1 });
+			listMenu.Add(new model.menu { id = 3, name = "节点3", parentId = 0, showOrder = 2 });
+			listMenu.Add(new model.menu {
 				id = 4, name = "节点1的子菜单", dllName = "UI.dll", fieldName = "UI.login", canOpen = true, parentId = 1, showOrder = 0
 			});
-			listmenu.Add(new model.menu { id = 5, name = "节点2的第二个子菜单", parentId = 2, showOrder = 1 });
-			listmenu.Add(new model.menu { id = 6, name = "节点2的第一个子菜单", parentId = 2, showOrder = 0 });
-			listmenu.Add(new model.menu { id = 7, name = "节点2的第二个子菜单的第一个", dllName = "UI.dll", fieldName = "UI.GuardRegister", canOpen = true, parentId = 5, showOrder = 0 });
+			listMenu.Add(new model.menu { id = 5, name = "节点2的第二个子菜单", parentId = 2, showOrder = 1 });
+			listMenu.Add(new model.menu { id = 6, name = "节点2的第一个子菜单", parentId = 2, showOrder = 0 });
+			listMenu.Add(new model.menu { id = 7, name = "节点2的第二个子菜单的第一个", dllName = "UI.dll", fieldName = "UI.GuardRegister", canOpen = true, parentId = 5, showOrder = 0 });
 			//listmenu.OrderBy(x => x.showOrder);
 		}
 		#endregion
 
 		private void initMemu() {
-			foreach (var menu in listmenu.OrderBy(x => x.showOrder).Where(x => x.parentId == 0)) {
+			foreach (var menu in listMenu.OrderBy(x => x.showOrder).Where(x => x.parentId == 0)) {
 				ToolStripMenuItem menuItem = new ToolStripMenuItem(menu.name);
 				if (menu.canOpen) {
 					bindClickResponse(menuItem, menu);
@@ -62,7 +62,7 @@ namespace framework {
 
 		//寻找子菜单
 		private void findSubNode(model.menu menu, ToolStripMenuItem menuItem) {
-			foreach (var subMenu in listmenu.OrderBy(x => x.showOrder).Where(x => x.parentId == menu.id)) {
+			foreach (var subMenu in listMenu.OrderBy(x => x.showOrder).Where(x => x.parentId == menu.id)) {
 				ToolStripMenuItem subMenuItem = new ToolStripMenuItem(subMenu.name);
 				if (subMenu.canOpen) {
 					bindClickResponse(subMenuItem, subMenu);
@@ -96,12 +96,8 @@ namespace framework {
 			};
 		}
 
-		private void tsmiSub_Click(object sender, EventArgs e) {
-			MessageBox.Show(sender.ToString());
-		}
-
 		private void initStatusStrip() {
-			ipContainer.Text += getIpv4List().First();
+			ipContainer.Text += model.function.getIpv4List().First();
 			userNameStatus.Text += model.user.GetCurrentUser().name;
 		}
 
@@ -113,16 +109,6 @@ namespace framework {
 				menuItem.DropDownItems.Add(subMenuItem);
 			}
 			menuMain.Items.Add(menuItem);
-		}
-
-		private List<string> getIpv4List() {
-			List<string> list = new List<string>();
-			foreach (IPAddress ip in Dns.GetHostAddresses(Dns.GetHostName())) {
-				if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork) {
-					list.Add(ip.ToString());
-				}
-			}
-			return list;
 		}
 
 		private void tabControl1_MouseDoubleClick(object sender, MouseEventArgs e) {

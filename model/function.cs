@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using System.Net;
 
 namespace model {
 	public class function {
@@ -17,6 +18,16 @@ namespace model {
 
 			}
 			return encryptedStrBuilder.ToString();
+		}
+
+		public static List<string> getIpv4List() {
+			List<string> iplist = new List<string>();
+			foreach (IPAddress ip in Dns.GetHostAddresses(Dns.GetHostName())) {
+				if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork) {
+					iplist.Add(ip.ToString());
+				}
+			}
+			return iplist;
 		}
 	}
 }

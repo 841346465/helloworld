@@ -35,7 +35,7 @@
 			// 
 			this.txtLoginName.Location = new System.Drawing.Point(102, 38);
 			this.txtLoginName.Name = "txtLoginName";
-			this.txtLoginName.Size = new System.Drawing.Size(273, 21);
+			this.txtLoginName.Size = new System.Drawing.Size(218, 21);
 			this.txtLoginName.TabIndex = 0;
 			this.txtLoginName.Text = "supermanager";
 			// 
@@ -44,7 +44,7 @@
 			this.txtPassword.Location = new System.Drawing.Point(102, 86);
 			this.txtPassword.Name = "txtPassword";
 			this.txtPassword.PasswordChar = '*';
-			this.txtPassword.Size = new System.Drawing.Size(273, 21);
+			this.txtPassword.Size = new System.Drawing.Size(218, 21);
 			this.txtPassword.TabIndex = 1;
 			this.txtPassword.Text = "supermanager";
 			this.txtPassword.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPassword_KeyDown);
@@ -79,7 +79,7 @@
 			// 
 			// btnCancel
 			// 
-			this.btnCancel.Location = new System.Drawing.Point(300, 137);
+			this.btnCancel.Location = new System.Drawing.Point(245, 137);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(75, 23);
 			this.btnCancel.TabIndex = 3;
@@ -91,7 +91,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(431, 208);
+			this.ClientSize = new System.Drawing.Size(382, 221);
 			this.ControlBox = false;
 			this.Controls.Add(this.btnCancel);
 			this.Controls.Add(this.btnLogin);
