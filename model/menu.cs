@@ -31,6 +31,10 @@ namespace model {
 		[Column("fieldName")]
 		public string fieldName { get; set; }
 
+		[DisplayName("可以打开")]
+		[Column("canOpen")]
+		public bool canOpen { get; set; }
+
 		[DisplayName("顺序号")]
 		[Column("showOrder")]
 		public uint showOrder { get; set; }

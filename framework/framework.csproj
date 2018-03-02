@@ -51,6 +51,12 @@
     <Compile Include="framework.Designer.cs">
       <DependentUpon>framework.cs</DependentUpon>
     </Compile>
+    <Compile Include="login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="login.Designer.cs">
+      <DependentUpon>login.cs</DependentUpon>
+    </Compile>
     <Compile Include="privManager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,9 +77,17 @@
     <Compile Include="menuManager.Designer.cs">
       <DependentUpon>menuManager.cs</DependentUpon>
     </Compile>
-    <Compile Include="user.cs" />
+    <Compile Include="register.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="register.Designer.cs">
+      <DependentUpon>register.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="framework.resx">
       <DependentUpon>framework.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="login.resx">
+      <DependentUpon>login.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="privManager.resx">
       <DependentUpon>privManager.cs</DependentUpon>
@@ -92,6 +106,9 @@
     </Compile>
     <EmbeddedResource Include="menuManager.resx">
       <DependentUpon>menuManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="register.resx">
+      <DependentUpon>register.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\DataSources\user.datasource" />
     <None Include="Properties\Settings.settings">

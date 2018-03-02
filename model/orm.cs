@@ -99,7 +99,7 @@ namespace model {
 		#endregion
 
 		#region retrieve
-		public T FirstOrDefault<T>(T data) {
+		public T First<T>(T data) {
 			return default(T);
 		}
 		public List<T> QueryList<T>(T data) {

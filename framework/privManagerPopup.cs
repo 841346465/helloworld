@@ -14,7 +14,23 @@ namespace framework {
 			InitializeComponent();
 		}
 
+		public void SetList(List<string> list) {
+			list.Sort();
+			foreach (string item in list) {
+				listBox1.Items.Add(item);
+			}
+		}
+
+		public string GetSelected {
+			get {
+				return listBox1.SelectedItem.ToString();
+			}
+		}
 		private void btnSave_Click(object sender, EventArgs e) {
+			if (listBox1.SelectedItem == null) {
+				MessageBox.Show("请选择一个模块");
+				return;
+			}
 			this.DialogResult = DialogResult.OK;
 		}
 
