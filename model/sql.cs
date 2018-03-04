@@ -87,6 +87,12 @@ namespace model
                                             '{17}',
                                             '{18}',
                                             '{19}')";
-        internal static string GuardQueryList="Select*from staff ";
+        internal static string GuardQueryList= @"Select
+                name, phone, certificate_num, service_area, ID_card, army, r_and_p,
+                address, Hukou, contact_way, political_status, part_of_company, serviceunit, h_and_w, sex, soldier, 
+                DATE_FORMAT(approve_time,'%y-%m-%d %H:%i:%s') approve_time,
+                DATE_FORMAT(date_of_birth,'%y-%m-%d %H:%i:%s') date_of_birth,
+                major_skill, training_record
+                from staff ";
     }
 }

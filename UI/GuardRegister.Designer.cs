@@ -40,7 +40,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.guardBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
@@ -77,9 +76,11 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.richTextBox2 = new System.Windows.Forms.RichTextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.guardBindingSource)).BeginInit();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -174,19 +175,15 @@
             // 
             // textBox1
             // 
-            this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.guardBindingSource, "name", true));
+            this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource1, "name", true));
             this.textBox1.Location = new System.Drawing.Point(189, 23);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(100, 21);
             this.textBox1.TabIndex = 10;
             // 
-            // guardBindingSource
-            // 
-            this.guardBindingSource.DataSource = typeof(model.guard);
-            // 
             // textBox2
             // 
-            this.textBox2.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.guardBindingSource, "phone", true));
+            this.textBox2.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource1, "phone", true));
             this.textBox2.Location = new System.Drawing.Point(583, 23);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(100, 21);
@@ -194,7 +191,7 @@
             // 
             // textBox3
             // 
-            this.textBox3.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.guardBindingSource, "certificate_num", true));
+            this.textBox3.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource1, "certificate_num", true));
             this.textBox3.Location = new System.Drawing.Point(189, 61);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(100, 21);
@@ -202,7 +199,7 @@
             // 
             // textBox4
             // 
-            this.textBox4.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.guardBindingSource, "service_area", true));
+            this.textBox4.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource1, "service_area", true));
             this.textBox4.Location = new System.Drawing.Point(583, 65);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(100, 21);
@@ -210,7 +207,7 @@
             // 
             // textBox5
             // 
-            this.textBox5.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.guardBindingSource, "ID_card", true));
+            this.textBox5.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource1, "ID_card", true));
             this.textBox5.Location = new System.Drawing.Point(189, 105);
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(100, 21);
@@ -218,7 +215,7 @@
             // 
             // textBox8
             // 
-            this.textBox8.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.guardBindingSource, "army", true));
+            this.textBox8.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource1, "army", true));
             this.textBox8.Location = new System.Drawing.Point(583, 188);
             this.textBox8.Name = "textBox8";
             this.textBox8.Size = new System.Drawing.Size(100, 21);
@@ -226,7 +223,7 @@
             // 
             // textBox10
             // 
-            this.textBox10.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.guardBindingSource, "address", true));
+            this.textBox10.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource1, "address", true));
             this.textBox10.Location = new System.Drawing.Point(583, 233);
             this.textBox10.Name = "textBox10";
             this.textBox10.Size = new System.Drawing.Size(100, 21);
@@ -234,7 +231,7 @@
             // 
             // textBox6
             // 
-            this.textBox6.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.guardBindingSource, "Hukou", true));
+            this.textBox6.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource1, "Hukou", true));
             this.textBox6.Location = new System.Drawing.Point(189, 264);
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(100, 21);
@@ -242,7 +239,7 @@
             // 
             // textBox9
             // 
-            this.textBox9.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.guardBindingSource, "political_status", true));
+            this.textBox9.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource1, "political_status", true));
             this.textBox9.Location = new System.Drawing.Point(189, 296);
             this.textBox9.Name = "textBox9";
             this.textBox9.Size = new System.Drawing.Size(100, 21);
@@ -349,7 +346,7 @@
             // 
             // textBox11
             // 
-            this.textBox11.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.guardBindingSource, "serviceunit", true));
+            this.textBox11.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource1, "serviceunit", true));
             this.textBox11.Location = new System.Drawing.Point(189, 329);
             this.textBox11.Name = "textBox11";
             this.textBox11.Size = new System.Drawing.Size(100, 21);
@@ -357,7 +354,7 @@
             // 
             // textBox12
             // 
-            this.textBox12.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.guardBindingSource, "part_of_company", true));
+            this.textBox12.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource1, "part_of_company", true));
             this.textBox12.Location = new System.Drawing.Point(583, 305);
             this.textBox12.Name = "textBox12";
             this.textBox12.Size = new System.Drawing.Size(100, 21);
@@ -365,6 +362,7 @@
             // 
             // dateTimePicker1
             // 
+            this.dateTimePicker1.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bindingSource1, "approve_time", true));
             this.dateTimePicker1.Location = new System.Drawing.Point(189, 144);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(100, 21);
@@ -372,7 +370,7 @@
             // 
             // dateTimePicker2
             // 
-            this.dateTimePicker2.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.guardBindingSource, "date_of_birth", true));
+            this.dateTimePicker2.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bindingSource1, "date_of_birth", true));
             this.dateTimePicker2.Location = new System.Drawing.Point(583, 144);
             this.dateTimePicker2.Name = "dateTimePicker2";
             this.dateTimePicker2.Size = new System.Drawing.Size(100, 21);
@@ -381,7 +379,8 @@
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
-            this.radioButton1.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.guardBindingSource, "sex", true));
+            this.radioButton1.Checked = true;
+            this.radioButton1.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.bindingSource1, "sex", true));
             this.radioButton1.Location = new System.Drawing.Point(20, 24);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(35, 16);
@@ -397,25 +396,24 @@
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(35, 16);
             this.radioButton2.TabIndex = 40;
-            this.radioButton2.TabStop = true;
             this.radioButton2.Text = "女";
             this.radioButton2.UseVisualStyleBackColor = true;
             // 
             // radioButton3
             // 
             this.radioButton3.AutoSize = true;
-            this.radioButton3.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.guardBindingSource, "soldier", true));
+            this.radioButton3.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.bindingSource1, "soldier", true));
             this.radioButton3.Location = new System.Drawing.Point(18, 20);
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(35, 16);
             this.radioButton3.TabIndex = 41;
-            this.radioButton3.TabStop = true;
             this.radioButton3.Text = "是";
             this.radioButton3.UseVisualStyleBackColor = true;
             // 
             // radioButton4
             // 
             this.radioButton4.AutoSize = true;
+            this.radioButton4.Checked = true;
             this.radioButton4.Location = new System.Drawing.Point(88, 20);
             this.radioButton4.Name = "radioButton4";
             this.radioButton4.Size = new System.Drawing.Size(35, 16);
@@ -446,7 +444,7 @@
             // 
             // textBox7
             // 
-            this.textBox7.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.guardBindingSource, "r_and_p", true));
+            this.textBox7.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource1, "r_and_p", true));
             this.textBox7.Location = new System.Drawing.Point(189, 224);
             this.textBox7.Name = "textBox7";
             this.textBox7.Size = new System.Drawing.Size(100, 21);
@@ -454,7 +452,7 @@
             // 
             // textBox13
             // 
-            this.textBox13.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.guardBindingSource, "contact_way", true));
+            this.textBox13.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource1, "contact_way", true));
             this.textBox13.Location = new System.Drawing.Point(583, 273);
             this.textBox13.Name = "textBox13";
             this.textBox13.Size = new System.Drawing.Size(100, 21);
@@ -462,7 +460,7 @@
             // 
             // textBox14
             // 
-            this.textBox14.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.guardBindingSource, "h_and_w", true));
+            this.textBox14.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource1, "h_and_w", true));
             this.textBox14.Location = new System.Drawing.Point(855, 66);
             this.textBox14.Name = "textBox14";
             this.textBox14.Size = new System.Drawing.Size(100, 21);
@@ -492,7 +490,7 @@
             // 
             // richTextBox1
             // 
-            this.richTextBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.guardBindingSource, "major_skill", true));
+            this.richTextBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource1, "major_skill", true));
             this.richTextBox1.Location = new System.Drawing.Point(855, 113);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(194, 96);
@@ -501,18 +499,33 @@
             // 
             // richTextBox2
             // 
-            this.richTextBox2.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.guardBindingSource, "dtraining_record", true));
+            this.richTextBox2.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource1, "training_record", true));
             this.richTextBox2.Location = new System.Drawing.Point(855, 233);
             this.richTextBox2.Name = "richTextBox2";
             this.richTextBox2.Size = new System.Drawing.Size(194, 96);
             this.richTextBox2.TabIndex = 51;
             this.richTextBox2.Text = "";
             // 
+            // bindingSource1
+            // 
+            this.bindingSource1.DataSource = typeof(model.guard);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(855, 23);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 52;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // GuardRegister
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1172, 502);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.richTextBox2);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.groupBox2);
@@ -558,11 +571,11 @@
             this.Controls.Add(this.label1);
             this.Name = "GuardRegister";
             this.Text = "保安录入";
-            ((System.ComponentModel.ISupportInitialize)(this.guardBindingSource)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -617,7 +630,8 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.RichTextBox richTextBox2;
-        private System.Windows.Forms.BindingSource guardBindingSource;
+        private System.Windows.Forms.BindingSource bindingSource1;
+        private System.Windows.Forms.Button button1;
     }
 }
 
