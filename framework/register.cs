@@ -10,8 +10,8 @@ using System.Windows.Forms;
 using model;
 
 namespace framework {
-	public partial class menuManager : Form {
-		public menuManager() {
+	public partial class register : Form {
+		public register() {
 			InitializeComponent();
 			addNode();
 			initNode();
@@ -49,31 +49,32 @@ namespace framework {
 			}
 		}
 
-		private void addSibAndSubMenu_Click(object sender, EventArgs e) {
-			var privManager1 = new privManager();
-			var currentMenu = treeView1.SelectedNode.Tag as menu;
-			var newMenu = currentMenu.Clone() as menu;
-			switch ((sender as ToolStripMenuItem).Name){
-				case "addSibMenu":
-					newMenu.showOrder = currentMenu.showOrder + 1;
-					break;
-				case "addSubMenu":
-					newMenu.showOrder = (treeView1.SelectedNode.LastNode.Tag as menu).showOrder + 1;
-					break;
-				case "manageMenu":
-					break;
-				default: break;
-			}
-			privManager1.menu = newMenu;
-			privManager1.ShowDialog();
+		private void chkSelectAll_CheckedChanged(object sender, EventArgs e) {
+			recursion(treeView1.Nodes);
 		}
 
-		private void treeView1_MouseClick(object sender, MouseEventArgs e) {
-			if (e.Button == MouseButtons.Right) {
-				TreeNode tn = treeView1.GetNodeAt(e.Location);
-				if (tn != null) {
-					treeView1.SelectedNode = tn;
+		private void recursion(TreeNodeCollection nodes) {
+			foreach (TreeNode node in nodes) {
+				node.Checked = chkSelectAll.Checked;
+				if (node.Nodes.Count > 0) {
+					recursion(node.Nodes);
 				}
+			}
+		}
+
+		private void btnSave_Click(object sender, EventArgs e) {
+			if (string.IsNullOrEmpty(txtLoginName.Text)) {
+				MessageBox.Show("请录入用户登录名");
+				return;
+			} else if (string.IsNullOrEmpty(txtName.Text)) {
+				MessageBox.Show("请录入真实姓名");
+				return;
+			} else if ((txtPassword.Text).Length < 6) {
+				MessageBox.Show("密码至少需要六位字符");
+				return;
+			} else if (!txtPassword.Text.Equals(txtEnsurePassword.Text)) {
+				MessageBox.Show("两次密码输入不一致");
+				return;
 			}
 		}
 	}

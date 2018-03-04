@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
+using System.Reflection;
 
 namespace framework {
 	public partial class framework : Form {
@@ -16,90 +17,98 @@ namespace framework {
 		}
 
 		private void Form1_Load(object sender, EventArgs e) {
-			InitMemuMain();
-			addSysMenu();
-			//ipContainer.Text = string.Join(",", ipv4List());
-			ipContainer.Text = getIpv4List().First();
-			
+			addMenu();
+			//这部分改为根据当前用户去数据库查询，获得List<model.menu> 
+
+			initMemu();
+			initStatusStrip();
+		}
+		readonly List<model.menu> sysMenuList = new List<model.menu> {
+			new model.menu {  name = "菜单管理", dllName = "framework.exe", fieldName = "framework.menuManager" },
+			new model.menu {  name = "新用户注册", dllName = "framework.exe", fieldName = "framework.register" }
+		};
+		List<model.menu> listMenu = new List<model.menu>();
+
+		#region 测试时代码，正式会删掉
+		private void addMenu() {
+			listMenu.Add(new model.menu { id = 1, name = "节点1", dllName = "UI.dll", fieldName = "UI.CompanyRegister", canOpen = true, parentId = 0, showOrder = 1 });
+			listMenu.Add(new model.menu { id = 2, name = "节点2", parentId = 0, showOrder = 1 });
+			listMenu.Add(new model.menu { id = 3, name = "节点3", parentId = 0, showOrder = 2 });
+			listMenu.Add(new model.menu {
+				id = 4, name = "节点1的子菜单", dllName = "UI.dll", fieldName = "UI.login", canOpen = true, parentId = 1, showOrder = 0
+			});
+			listMenu.Add(new model.menu { id = 5, name = "节点2的第二个子菜单", parentId = 2, showOrder = 1 });
+			listMenu.Add(new model.menu { id = 6, name = "节点2的第一个子菜单", parentId = 2, showOrder = 0 });
+			listMenu.Add(new model.menu { id = 7, name = "节点2的第二个子菜单的第一个", dllName = "UI.dll", fieldName = "UI.GuardRegister", canOpen = true, parentId = 5, showOrder = 0 });
+			//listmenu.OrderBy(x => x.showOrder);
+		}
+		#endregion
+
+		private void initMemu() {
+			foreach (var menu in listMenu.OrderBy(x => x.showOrder).Where(x => x.parentId == 0)) {
+				ToolStripMenuItem menuItem = new ToolStripMenuItem(menu.name);
+				if (menu.canOpen) {
+					bindClickResponse(menuItem, menu);
+				}
+				menuMain.Items.Add(menuItem);
+				findSubNode(menu, menuItem);
+			}
+			#region 管理员添加系统设置菜单
+			if (model.user.GetCurrentUser().isAdmin) {
+				addSysMenu();
+			}
+			#endregion
 		}
 
-		private void InitMemuMain() {
-			ToolStripMenuItem tsmi;
-			ToolStripMenuItem tsmiSub;
-
-			//添加菜单
-			tsmi = new ToolStripMenuItem("a");
-			tsmiSub = new ToolStripMenuItem("a1", null, tsmiSub_Click, "tsmiName");
-			tsmi.DropDownItems.Add(tsmiSub);
-			tsmiSub = new ToolStripMenuItem("a2", null, null, "tsmiName");
-			tsmi.DropDownItems.Add(tsmiSub);
-			menuMain.Items.Add(tsmi);
-
-			//添加菜单
-			tsmi = new ToolStripMenuItem("b");
-			tsmiSub = new ToolStripMenuItem("b1", null, tsmiSub_Click, "tsmiName");
-			tsmi.DropDownItems.Add(tsmiSub);
-			tsmiSub = new ToolStripMenuItem("b2", null, null, "tsmiName");
-			tsmi.DropDownItems.Add(tsmiSub);
-			menuMain.Items.Add(tsmi);
+		//寻找子菜单
+		private void findSubNode(model.menu menu, ToolStripMenuItem menuItem) {
+			foreach (var subMenu in listMenu.OrderBy(x => x.showOrder).Where(x => x.parentId == menu.id)) {
+				ToolStripMenuItem subMenuItem = new ToolStripMenuItem(subMenu.name);
+				if (subMenu.canOpen) {
+					bindClickResponse(subMenuItem, subMenu);
+				};
+				subMenuItem.Tag = subMenu;
+				menuItem.DropDownItems.Add(subMenuItem);
+				findSubNode(subMenu, subMenuItem);
+			}
 		}
 
-		private void tsmiSub_Click(object sender, EventArgs e) {
-			MessageBox.Show(sender.ToString());
+		//绑定点击事件
+		private void bindClickResponse(ToolStripMenuItem menuItem, model.menu menu) {
+			menuItem.Click += (object sender, EventArgs e) => {
+				// 寻找打开的窗口，如果有已经打开的则不新增
+				if (tabControl1.TabPages.ContainsKey(menu.fieldName)) {
+					tabControl1.SelectedTab = tabControl1.TabPages[menu.fieldName];
+				} else {
+					Assembly assembly = Assembly.LoadFile(Application.StartupPath + "\\" + menu.dllName);
+					var currentForm = (assembly.CreateInstance(menu.fieldName) as Form);
+					currentForm.TopLevel = false;
+					currentForm.FormBorderStyle = FormBorderStyle.None;
+					currentForm.Dock = DockStyle.Fill;
+					var tabPage = new TabPage();
+					tabPage.Name = menu.fieldName;
+					tabPage.Controls.Add(currentForm);
+					tabPage.Text = currentForm.Text;
+					tabControl1.TabPages.Add(tabPage);
+					tabControl1.SelectedTab = tabPage;
+					currentForm.Show();
+				}
+			};
+		}
+
+		private void initStatusStrip() {
+			ipContainer.Text += model.function.getIpv4List().First();
+			userNameStatus.Text += model.user.GetCurrentUser().name;
 		}
 
 		private void addSysMenu() {
-			ToolStripMenuItem helper = new ToolStripMenuItem("帮助");
-			ToolStripMenuItem menuManager = new ToolStripMenuItem("菜单管理");
-			menuManager.Click += menuManager_Click;
-			ToolStripMenuItem privManager = new ToolStripMenuItem("权限管理");
-			privManager.Click += privManager_Click;
-
-			helper.DropDownItems.Add(menuManager);
-			helper.DropDownItems.Add(privManager);
-			menuMain.Items.Add(helper);
-		}
-
-		private void privManager_Click(object sender, EventArgs e) {
-			var tabPage = new TabPage();
-			tabControl1.TabPages.Add(tabPage);
-
-			var privForm = new privManager();
-			privForm.TopLevel = false;
-			privForm.FormBorderStyle = FormBorderStyle.None;
-			privForm.Size = tabPage.Size;
-			privForm.Dock = DockStyle.Fill;
-
-			tabPage.Controls.Add(privForm);
-			tabPage.Text = privForm.Text;
-
-			privForm.Show();
-		}
-
-		private void menuManager_Click(object sender, EventArgs e) {
-			var tabPage = new TabPage();
-			tabControl1.TabPages.Add(tabPage);
-
-			var menuForm = new menuManager();
-			menuForm.TopLevel = false;
-			menuForm.FormBorderStyle = FormBorderStyle.None;
-			menuForm.Size = tabPage.Size;
-			menuForm.Dock = DockStyle.Fill;
-
-			tabPage.Controls.Add(menuForm);
-			tabPage.Text = menuForm.Text;
-
-			menuForm.Show();
-		}
-
-		private List<string> getIpv4List() {
-			List<string> list = new List<string>();
-			foreach (IPAddress ip in Dns.GetHostAddresses(Dns.GetHostName())) {
-				if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork) {
-					list.Add(ip.ToString());
-				}
+			ToolStripMenuItem menuItem = new ToolStripMenuItem("系统管理");
+			foreach (var sysMenu in sysMenuList) {
+				ToolStripMenuItem subMenuItem = new ToolStripMenuItem(sysMenu.name);
+				bindClickResponse(subMenuItem, sysMenu);
+				menuItem.DropDownItems.Add(subMenuItem);
 			}
-			return list;
+			menuMain.Items.Add(menuItem);
 		}
 
 		private void tabControl1_MouseDoubleClick(object sender, MouseEventArgs e) {
@@ -107,6 +116,5 @@ namespace framework {
 				tabControl1.TabPages.Remove(tabControl1.SelectedTab);
 			}
 		}
-
 	}
 }
