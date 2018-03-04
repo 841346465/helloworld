@@ -44,7 +44,6 @@
   <ItemGroup>
     <Compile Include="databaseManager.cs" />
     <Compile Include="IdatabaseManager.cs" />
-    <Compile Include="MySQLconnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -14,7 +14,7 @@ namespace framework {
 			InitializeComponent();
 		}
 		
-		public model.menu menu { get; set; }
+		public MODEL.menu menu { get; set; }
 
 		public void SetMode(string mode) {
 			switch (mode) {
@@ -68,12 +68,11 @@ namespace framework {
 				return;
 			} else {
 				menu.name = tbxMenuName.Text;
-				model.orm ormInstance = new model.orm();
-				ormInstance.BeginTransaction();
-				ormInstance.Insert<model.menu>(menu);
-				menu.id = 100;
-				ormInstance.Insert<model.menu>(menu);
-				ormInstance.Commit();
+				MODEL.ORM.orm ormInstance = new MODEL.ORM.orm();
+				//ormInstance.BeginTransaction();
+				ormInstance.Insert<MODEL.menu>(menu);
+				//ormInstance.Commit();
+				this.DialogResult = DialogResult.OK;
 			}
 		}
 	}

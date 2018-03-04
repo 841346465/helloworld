@@ -125,9 +125,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\model\model.csproj">
+    <ProjectReference Include="..\model\MODEL.csproj">
       <Project>{49481b24-0a33-432e-9b2d-04840f3cc421}</Project>
-      <Name>model</Name>
+      <Name>MODEL</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -17,7 +17,7 @@ namespace framework {
 		private void btnLogin_Click(object sender, EventArgs e) {
 			if (txtLoginName.Text.Equals("")) { MessageBox.Show("用户名不能为空"); return; }
 			if (txtPassword.Text.Equals("")) { MessageBox.Show("密码不能为空"); return; }
-			string password = model.function.GetMD5(txtPassword.Text);
+			string password = MODEL.function.GetMD5(txtPassword.Text);
 			if (validateUser(txtLoginName.Text, password)) {
 				this.DialogResult = DialogResult.OK;
 			} else {
@@ -30,22 +30,22 @@ namespace framework {
 		}
 
 		private bool validateUser(string loginName, string password) {
-			model.user currentUser = new model.user {
+			MODEL.user currentUser = new MODEL.user {
 				loginId = loginName,
 				password = password
 			};
 			#region 超级管理员
-			if (model.user.isSuperManager(currentUser)) {
-				model.user.SetUser(currentUser);
+			if (MODEL.user.isSuperManager(currentUser)) {
+				MODEL.user.SetUser(currentUser);
 				return true;
 			}
 			#endregion
 
-			model.orm ormInstance = new model.orm();
-			if ((currentUser = ormInstance.First(currentUser)) == null) {
+			MODEL.ORM.orm ormInstance = new MODEL.ORM.orm();
+			if ((currentUser = ormInstance.First<MODEL.user>(new MODEL.ORM.sql())) == null) {
 				return false;
 			} else {
-				model.user.SetUser(currentUser);
+				MODEL.user.SetUser(currentUser);
 				return true;
 			}
 		}

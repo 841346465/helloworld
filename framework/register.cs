@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using model;
+using MODEL;
 
 namespace framework {
 	public partial class register : Form {

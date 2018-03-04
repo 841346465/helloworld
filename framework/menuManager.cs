@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using model;
+using MODEL;
 
 namespace framework {
 	public partial class menuManager : Form {
@@ -17,18 +17,19 @@ namespace framework {
 			initNode();
 		}
 
-		List<menu> listmenu = new List<menu>();
+		List<menu> listMenu = new List<menu>();
 		private void addNode() {
-			listmenu.Add(new menu { id = 1, name = "节点1", parentId = 0, showOrder = 2 });
-			listmenu.Add(new menu { id = 2, name = "节点2", parentId = 0, showOrder = 1 });
-			listmenu.Add(new menu { id = 3, name = "节点3", parentId = 0, showOrder = 0 });
-			listmenu.Add(new menu { id = 4, name = "节点4", parentId = 1, showOrder = 0 });
-			listmenu.Add(new menu { id = 5, name = "节点5", parentId = 2, showOrder = 1 });
-			listmenu.Add(new menu { id = 6, name = "节点6", parentId = 2, showOrder = 0 });
+			MODEL.ORM.orm ormInstance = new MODEL.ORM.orm();
+			MODEL.ORM.sql sqlInstance = new MODEL.ORM.sql();
+			sqlInstance.Select("*").From("menu");
+			if (!MODEL.user.GetCurrentUser().isAdmin) {
+				sqlInstance.Where("id in (select roleId from user_privileges where loginId = @0)", MODEL.user.GetCurrentUser().loginId);
+			}
+			listMenu = ormInstance.Fetch<MODEL.menu>(sqlInstance);
 		}
 
 		public void initNode() {
-			foreach (var menu in listmenu.OrderBy(x => x.showOrder).Where(x => x.parentId == 0)) {
+			foreach (var menu in listMenu.OrderBy(x => x.showOrder).Where(x => x.parentId == 0)) {
 				TreeNode treeNode = new TreeNode(menu.name);
 				treeNode.Tag = menu;
 				treeView1.Nodes.Add(treeNode);
@@ -37,10 +38,10 @@ namespace framework {
 		}
 		//寻找子node
 		private void findSubNode(menu menu, TreeNode treeNode) {
-			if (listmenu.Count(x => x.parentId == menu.id) == 0) {
+			if (listMenu.Count(x => x.parentId == menu.id) == 0) {
 				return;
 			} else {
-				foreach (var subMenu in listmenu.OrderBy(x => x.showOrder).Where(x => x.parentId == menu.id)) {
+				foreach (var subMenu in listMenu.OrderBy(x => x.showOrder).Where(x => x.parentId == menu.id)) {
 					TreeNode subTreeNode = new TreeNode(subMenu.name);
 					subTreeNode.Tag = subMenu;
 					treeNode.Nodes.Add(subTreeNode);
@@ -51,14 +52,21 @@ namespace framework {
 
 		private void addSibAndSubMenu_Click(object sender, EventArgs e) {
 			var privManager1 = new privManager();
-			var currentMenu = treeView1.SelectedNode.Tag as menu;
+			menu currentMenu;
+			if (treeView1.SelectedNode != null) {
+				currentMenu = treeView1.SelectedNode.Tag as menu;
+			} else {
+				currentMenu = new menu { parentId = 0 };
+			}
 			var newMenu = currentMenu.Clone() as menu;
-			switch ((sender as ToolStripMenuItem).Name){
+			switch ((sender as ToolStripMenuItem).Name) {
 				case "addSibMenu":
 					newMenu.showOrder = currentMenu.showOrder + 1;
 					break;
 				case "addSubMenu":
-					newMenu.showOrder = (treeView1.SelectedNode.LastNode.Tag as menu).showOrder + 1;
+					if (treeView1.Nodes.Count == 0) { newMenu.showOrder = 0; } else {
+						newMenu.showOrder = (treeView1.SelectedNode.LastNode.Tag as menu).showOrder + 1;
+					}
 					break;
 				case "manageMenu":
 					break;
@@ -74,6 +82,22 @@ namespace framework {
 				if (tn != null) {
 					treeView1.SelectedNode = tn;
 				}
+			}
+		}
+
+		private void contextMenuStrip1_Opening(object sender, CancelEventArgs e) {
+			if (treeView1.SelectedNode == null) {
+				manageMenu.Enabled = false;
+				addSibMenu.Enabled = false;
+				if (treeView1.Nodes.Count != 0) { addSubMenu.Enabled = false; }
+				moveUp.Enabled = false;
+				moveDown.Enabled = false;
+			} else {
+				manageMenu.Enabled = true;
+				addSibMenu.Enabled = true;
+				addSubMenu.Enabled = true;
+				moveUp.Enabled = true;
+				moveDown.Enabled = true;
 			}
 		}
 	}

@@ -5,16 +5,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 
-namespace model {
+namespace MODEL.ORM {
 	public class orm {
 		public orm() {
 			db = DBhelper.databaseManager.GetInstance();
 		}
 		DBhelper.databaseManager db;
 
+		public void Open() { db.Open(); }
+		public void Close() { db.Close(); }
 		public void BeginTransaction() { db.BeginTransaction(); }
 		public void Commit() { db.Commit(); }
 		public void Rollback() { db.Rollback(); }
+		public int ExecuteNonQuery(string sql) {
+			return db.ExecuteNonQuery(sql);
+		}
+		//
 
 		#region create
 		public int Insert<T>(T data) {
@@ -35,9 +41,9 @@ namespace model {
 							int intValue = (int)property.GetValue(data, null);
 							values.Add(intValue.ToString());
 						} else {
-							//if (Sql.InjectionDefend(property.GetValue(data, null).ToString())) {
+							if (ORM.sql.InjectionDefend(property.GetValue(data, null).ToString())) {
 							values.Add("\'" + property.GetValue(data, null) + "\'");
-							//}
+							}
 						}
 					}
 				}
@@ -99,13 +105,48 @@ namespace model {
 		#endregion
 
 		#region retrieve
-		public T First<T>(T data) {
-			return default(T);
+
+		/// <summary>
+		/// 取第一条，如果没有符合返回null，不能把此方法写作Fetch().First()，因为这样datareader会无故读许多无用数据，影响查询
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="sql"></param>
+		/// <returns></returns>
+		public T First<T>(sql sql) {
+			try {
+				T result = default(T);
+				System.Data.Common.DbDataReader reader = db.GetReader(sql.GetSql());
+				if (reader.Read()) {
+					Type type = typeof(T);
+					if (type.IsPrimitive || type == typeof(string) || type == typeof(DateTime) || type.IsEnum) {
+						if (type.IsEnum) {
+							result = (T)Enum.ToObject(type, reader.GetValue(0));
+						} else {
+							result = (T)Convert.ChangeType(reader.GetValue(0), type);
+						}
+					} else {
+						result = Activator.CreateInstance<T>();
+						PropertyInfo[] properties = type.GetProperties();
+						foreach (PropertyInfo property in properties) {
+							string columName = attributesHelper.GetColumnName(property);
+							if (property.PropertyType.IsEnum) {
+								property.SetValue(result, Enum.ToObject(property.PropertyType, reader.GetValue(reader.GetOrdinal(columName))), null);
+							} else {
+								property.SetValue(result, Convert.ChangeType(reader.GetValue(reader.GetOrdinal(columName)), property.PropertyType), null);
+							}
+						}
+					}
+				}
+				return result;
+			} catch {
+				throw ;
+			} finally {
+				Close();
+			}
 		}
-		public List<T> QueryList<T>(T data) {
-			return null;
-			/*try {
-				ExecuteQuery(sql.GetSql());
+		public List<T> Fetch<T>(sql sql) {
+			try {
+				System.Data.Common.DbDataReader reader = db.GetReader(sql.GetSql());
 				List<T> list = new List<T>();
 				Type type = typeof(T);
 				if (type.IsPrimitive || type == typeof(string) || type == typeof(DateTime) || type.IsEnum) {
@@ -121,7 +162,7 @@ namespace model {
 						T result = Activator.CreateInstance<T>();
 						PropertyInfo[] properties = type.GetProperties();
 						foreach (PropertyInfo property in properties) {
-							string columName = AttributeProcess.GetColumnName(property);
+							string columName = attributesHelper.GetColumnName(property);
 							if (property.PropertyType.IsEnum) {
 								property.SetValue(result, Enum.ToObject(property.PropertyType, reader.GetValue(reader.GetOrdinal(columName))), null);
 							} else {
@@ -132,11 +173,11 @@ namespace model {
 					}
 				}
 				return list;
-			} catch (Exception e) {
-				throw e;
+			} catch  {
+				throw ;
 			} finally {
-				CloseSqlConnection();
-			}*/
+				Close();
+			}
 		}
 		#endregion
 

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace model {
+namespace MODEL.ORM {
 	[AttributeUsage(AttributeTargets.Class)]
 	public class TableAttribute : Attribute {
 		public TableAttribute(string tableName) {

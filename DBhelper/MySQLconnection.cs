@@ -23,30 +23,7 @@ namespace DBhelper {
 		/// <param name="database">数据库实例</param>  
 		/// <param name="uid">用户名称</param>  
 		/// <param name="password">密码</param>  
-		public void Initialize(string server, string database, string uid, string password) {
-			
-		}
-		/// <summary>  
-		/// 打开数据库连接  
-		/// </summary>  
-		/// <returns>是否成功</returns>  
-		public bool OpenConnection() {
-			if (conn.State != ConnectionState.Open) {
-				conn.Open();
-			}
-			return true;
-		}
-
-		/// <summary>  
-		/// 关闭数据库连接  
-		/// </summary>  
-		/// <returns></returns>  
-		public bool CloseConnection() {
-			if (conn.State != ConnectionState.Closed) {
-				conn.Close();
-			}
-			return true;
-		}
+		public void Initialize(string server, string database, string uid, string password) {}
 
 		/// <summary>  
 		/// 根据SQL获取DataTable数据表  
@@ -60,19 +37,6 @@ namespace DBhelper {
 			Da.Fill(dt);
 			return dt;
 		}
-
-		/// <summary>  
-		///  运行MySql语句返回 MySqlDataReader对象  
-		/// </summary>  
-		/// <param name="查询语句"></param>  
-		/// <returns>MySqlDataReader对象</returns>  
-		public MySqlDataReader GetReader(string SQL) {
-			MySqlCommand Cmd = new MySqlCommand(SQL, conn);
-			MySqlDataReader Dr;
-			Dr = Cmd.ExecuteReader(CommandBehavior.Default);
-			return Dr;
-		}
-
 		/// <summary>  
 		/// 运行MySql语句,返回DataSet对象  
 		/// </summary>  
@@ -107,24 +71,6 @@ namespace DBhelper {
 		public int ExecuteNonQuery(string sql) {
 			MySqlCommand cmd = new MySqlCommand(sql, conn);
 			return cmd.ExecuteNonQuery();
-		}
-
-		public int PrepareExceNonQuery(string sql, IEnumerable<KeyValuePair<string, object>> keyValuePairs) {
-			MySqlCommand cmd = new MySqlCommand(sql, conn);
-			cmd.Prepare();
-			foreach (var kv in keyValuePairs) {
-				cmd.Parameters[kv.Key].Value = kv.Value;
-			}
-			return cmd.ExecuteNonQuery();
-		}
-
-		public MySqlDataReader PrepareExecuteReader(string SQL, IEnumerable<KeyValuePair<string, object>> keyValuePairs) {
-			MySqlCommand Cmd = new MySqlCommand(SQL, conn);
-			Cmd.Prepare();
-			foreach (var kv in keyValuePairs) {
-				Cmd.Parameters[kv.Key].Value = kv.Value;
-			}
-			return Cmd.ExecuteReader(CommandBehavior.Default);
 		}
 	}
 }

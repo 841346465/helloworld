@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace model
-{
+namespace MODEL {
     internal static class sql
     {
         internal static string companyInsert = @"insert into `company` 

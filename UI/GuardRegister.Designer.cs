@@ -528,7 +528,7 @@
             // 
             // bindingSource1
             // 
-            this.bindingSource1.DataSource = typeof(model.guard);
+            this.bindingSource1.DataSource = typeof(MODEL.guard);
             // 
             // GuardRegister
             // 

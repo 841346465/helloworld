@@ -48,27 +48,35 @@ namespace DBhelper {
 
 		public void Commit() {
 			trans.Commit();
-			if (conn.State != System.Data.ConnectionState.Closed) { conn.Close(); }
+			trans = null;
 		}
 
+		public void Open() {
+			if (conn.State != System.Data.ConnectionState.Open) { conn.Open(); }
+			conn.Open();
+		}
+		public void Close() {
+			conn.Close();
+		}
 		public void Rollback() {
 			trans.Rollback();
-			if (conn.State != System.Data.ConnectionState.Closed) { conn.Close(); }
+		}
+
+		public DbDataReader GetReader(string sql) {
+			if (conn.State != System.Data.ConnectionState.Open) { conn.Open(); }
+			DbCommand cmd = conn.CreateCommand();
+			cmd.CommandText = sql;
+			return cmd.ExecuteReader();
 		}
 
 		public int ExecuteNonQuery(string sql) {
-			DbCommand cmd = new MySqlCommand(sql, conn as MySqlConnection);
 			if (conn.State != System.Data.ConnectionState.Open) { conn.Open(); }
-			try {
-				if (trans != null) {
-					cmd.Transaction = trans;
-				}
-				return cmd.ExecuteNonQuery();
-			} catch { throw; } finally {
-				if (conn == null) {
-					conn.Close();
-				}
+			DbCommand cmd = conn.CreateCommand();
+			cmd.CommandText = sql;
+			if (trans != null) {
+				cmd.Transaction = trans;
 			}
+			return cmd.ExecuteNonQuery();
 		}
 	}
 }

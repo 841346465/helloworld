@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace model {
+namespace MODEL {
 	public class user {
 		[DisplayName("登录名")]
 		public string loginId { get; set; }

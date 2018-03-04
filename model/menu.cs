@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MODEL.ORM;
 
-namespace model {
+namespace MODEL {
 
 	[Table("menu")]
 	[PrimaryKey("id", autoIncrement = true)]

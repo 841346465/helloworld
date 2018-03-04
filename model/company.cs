@@ -5,7 +5,7 @@ using System.Text;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
-namespace model {
+namespace MODEL {
 	public class company {
 		#region 数据
 		[DisplayName("公司名称")]
@@ -59,46 +59,5 @@ namespace model {
 		[DisplayName("奖惩情况")]
 		public string r_and_p { get; set; }
 		#endregion
-
-		DBhelper.MySQLconnection conn = new DBhelper.MySQLconnection();
-
-		public void Insert() {
-			string insertSql = string.Format(sql.companyInsert, sg_company_name, liscence, legal_representative, Approval_of_the_year, service_area,
-				is_across_zone == true ? 1 : 0, Registered_Address, business_address, registered_capital, branch_office, management_layer, phone, allstaff_num,
-				administrator_num, Security_Officer_num, Security_Officer_name, r_and_p);
-
-			conn.OpenConnection();
-			conn.ExecuteNonQuery(insertSql);
-			conn.CloseConnection();
-		}
-
-		public List<company> QueryList() {
-			List<company> returnlist = new List<company>();
-			conn.OpenConnection();
-			MySql.Data.MySqlClient.MySqlDataReader reader = conn.GetReader(sql.companyQueryList);
-			while (reader.Read()) {
-				returnlist.Add(new company() {
-					sg_company_name = reader["sg_company_name"].ToString(),
-					liscence = reader["liscence"].ToString(),
-					legal_representative = reader["legal_representative"].ToString(),
-					Approval_of_the_year = reader["Approval_of_the_year"].ToString(),
-					service_area = reader["service_area"].ToString(),
-					is_across_zone = reader["is_across_zone"].ToString() == "1" ? true : false,
-					Registered_Address = reader["Registered_Address"].ToString(),
-					business_address = reader["business_address"].ToString(),
-					registered_capital = reader["registered_capital"].ToString(),
-					branch_office = reader["branch_office"].ToString(),
-					management_layer = reader["management_layer"].ToString(),
-					phone = reader["phone"].ToString(),
-					allstaff_num = int.Parse(reader["allstaff_num"].ToString()),
-					administrator_num = int.Parse(reader["administrator_num"].ToString()),
-					Security_Officer_num = int.Parse(reader["Security_Officer_num"].ToString()),
-					Security_Officer_name = reader["Security_Officer_name"].ToString(),
-					r_and_p = reader["r_and_p"].ToString()
-				});
-			}
-			conn.CloseConnection();
-			return returnlist;
-		}
 	}
 }

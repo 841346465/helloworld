@@ -23,15 +23,15 @@ namespace framework {
 			initMemu();
 			initStatusStrip();
 		}
-		readonly List<model.menu> sysMenuList = new List<model.menu> {
-			new model.menu {  name = "菜单管理", dllName = "framework.exe", fieldName = "framework.menuManager" },
-			new model.menu {  name = "新用户注册", dllName = "framework.exe", fieldName = "framework.register" }
+		readonly List<MODEL.menu> sysMenuList = new List<MODEL.menu> {
+			new MODEL.menu {  name = "菜单管理", dllName = "framework.exe", fieldName = "framework.menuManager" },
+			new MODEL.menu {  name = "新用户注册", dllName = "framework.exe", fieldName = "framework.register" }
 		};
-		List<model.menu> listMenu = new List<model.menu>();
+		List<MODEL.menu> listMenu = new List<MODEL.menu>();
 
 		#region 测试时代码，正式会删掉
 		private void addMenu() {
-			listMenu.Add(new model.menu { id = 1, name = "节点1", dllName = "UI.dll", fieldName = "UI.CompanyRegister", canOpen = false, parentId = 0, showOrder = 1 });
+			/*listMenu.Add(new model.menu { id = 1, name = "节点1", dllName = "UI.dll", fieldName = "UI.CompanyRegister", canOpen = false, parentId = 0, showOrder = 1 });
 			listMenu.Add(new model.menu { id = 2, name = "节点2", parentId = 0, showOrder = 1 });
 			listMenu.Add(new model.menu { id = 3, name = "节点3", parentId = 0, showOrder = 2 });
 			listMenu.Add(new model.menu {
@@ -40,7 +40,14 @@ namespace framework {
 			listMenu.Add(new model.menu { id = 5, name = "节点2的第二个子菜单", parentId = 2, showOrder = 1 });
 			listMenu.Add(new model.menu { id = 6, name = "节点2的第一个子菜单", parentId = 2, showOrder = 0 });
 			listMenu.Add(new model.menu { id = 7, name = "节点2的第二个子菜单的第一个", dllName = "UI.dll", fieldName = "UI.GuardRegister", canOpen = true, parentId = 5, showOrder = 0 });
-			//listmenu.OrderBy(x => x.showOrder);
+			//listmenu.OrderBy(x => x.showOrder);*/
+			MODEL.ORM.orm ormInstance = new MODEL.ORM.orm();
+			MODEL.ORM.sql sqlInstance = new MODEL.ORM.sql();
+			sqlInstance.Select("*").From("menu");
+			if (!MODEL.user.GetCurrentUser().isAdmin) {
+				sqlInstance.Where("id in (select roleId from user_privileges where loginId = @0)", MODEL.user.GetCurrentUser().loginId);
+			}
+			listMenu = ormInstance.Fetch<MODEL.menu>(sqlInstance);
 		}
 		#endregion
 
@@ -54,14 +61,14 @@ namespace framework {
 				findSubNode(menu, menuItem);
 			}
 			#region 管理员添加系统设置菜单
-			if (model.user.GetCurrentUser().isAdmin) {
+			if (MODEL.user.GetCurrentUser().isAdmin) {
 				addSysMenu();
 			}
 			#endregion
 		}
 
 		//寻找子菜单
-		private void findSubNode(model.menu menu, ToolStripMenuItem menuItem) {
+		private void findSubNode(MODEL.menu menu, ToolStripMenuItem menuItem) {
 			foreach (var subMenu in listMenu.OrderBy(x => x.showOrder).Where(x => x.parentId == menu.id)) {
 				ToolStripMenuItem subMenuItem = new ToolStripMenuItem(subMenu.name);
 				if (subMenu.canOpen) {
@@ -74,7 +81,7 @@ namespace framework {
 		}
 
 		//绑定点击事件
-		private void bindClickResponse(ToolStripMenuItem menuItem, model.menu menu) {
+		private void bindClickResponse(ToolStripMenuItem menuItem, MODEL.menu menu) {
 			menuItem.Click += (object sender, EventArgs e) => {
 				// 寻找打开的窗口，如果有已经打开的则不新增
 				if (tabControl1.TabPages.ContainsKey(menu.fieldName)) {
@@ -97,8 +104,8 @@ namespace framework {
 		}
 
 		private void initStatusStrip() {
-			ipContainer.Text += model.function.getIpv4List().First();
-			userNameStatus.Text += model.user.GetCurrentUser().name;
+			ipContainer.Text += MODEL.function.getIpv4List().First();
+			userNameStatus.Text += MODEL.user.GetCurrentUser().name;
 		}
 
 		private void addSysMenu() {

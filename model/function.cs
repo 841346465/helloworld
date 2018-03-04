@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Net;
 
-namespace model {
+namespace MODEL {
 	public class function {
 		public static string GetMD5(string originString) {
 			byte[] origin = Encoding.UTF8.GetBytes(originString);

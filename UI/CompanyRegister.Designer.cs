@@ -255,7 +255,7 @@
             // 
             // bindingSource1
             // 
-            this.bindingSource1.DataSource = typeof(model.company);
+            this.bindingSource1.DataSource = typeof(MODEL.company);
             // 
             // textBox2
             // 

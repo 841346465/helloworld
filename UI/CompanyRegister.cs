@@ -8,32 +8,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace UI
-{
-    public partial class CompanyRegister : Form
-    {
-        public CompanyRegister()
-        {
-            InitializeComponent();
-            bindingSource1.DataSource = myCompany;
-        }
+namespace UI {
+	public partial class CompanyRegister : Form {
+		public CompanyRegister() {
+			InitializeComponent();
+			bindingSource1.DataSource = myCompany;
+		}
 
-        private List<model.company> listCompany = new List<model.company>();
-        private model.company myCompany = new model.company();
+		private List<MODEL.company> listCompany = new List<MODEL.company>();
+		private MODEL.company myCompany = new MODEL.company();
 
-        //录入
-        private void btnRegister_Click(object sender, EventArgs e)
-        {
-            bindingSource1.EndEdit();
-            myCompany.Insert();
-        }
-        //查询
-        private void btnQuery_Click(object sender, EventArgs e)
-        {
-            listCompany = myCompany.QueryList();
-            guardReport r = new guardReport();
-            r.SetData(listCompany);
-            r.Show();
-        }
-    }
+		//录入
+		private void btnRegister_Click(object sender, EventArgs e) {
+			bindingSource1.EndEdit();
+			new MODEL.ORM.orm().Insert(myCompany);
+		}
+		//查询
+		private void btnQuery_Click(object sender, EventArgs e) {
+			listCompany = new MODEL.ORM.orm().Fetch<MODEL.company>(new MODEL.ORM.sql());
+
+			guardReport r = new guardReport();
+			r.SetData(listCompany);
+			r.Show();
+		}
+	}
 }
