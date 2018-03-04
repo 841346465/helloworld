@@ -31,7 +31,7 @@ namespace UI
         private void btnQuery_Click(object sender, EventArgs e)
         {
             listCompany = myCompany.QueryList();
-            Report r = new Report();
+            guardReport r = new guardReport();
             r.SetData(listCompany);
             r.Show();
         }

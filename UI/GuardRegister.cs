@@ -25,7 +25,7 @@ namespace UI {
         //查询
         private void btnQuery_Click(object sender, EventArgs e) {
             listGuard = Guard.Querylist();
-            Report r = new Report();
+            guardReport r = new guardReport();
             r.SetData(listGuard);
             r.Show();
         }
@@ -33,25 +33,19 @@ namespace UI {
         private void button1_Click(object sender, EventArgs e) {
             var openfile = new OpenFileDialog();//打开文件对话框
             openfile.Filter = "image files(*.jpg;*.bmp,*.jpeg,*png);|*.jpg;*.bmp;*.jpeg;*.png";
-            openfile.ShowDialog();
-            FileStream fsread = new FileStream(openfile.FileName, FileMode.Open);//数据流
-            byte[] buffer = new byte[fsread.Length];
-            fsread.Read(buffer, 0, (int)fsread.Length);
-            string a = Convert.ToBase64String(buffer);
-           // buffer-->string
-                //insert itn v
-            //fsread.Read(buffer, 0, 2048 * 1024);
-          
-        }
-
-            //path 路径
-            //定义 一个 filestream 方法open 得到byte[]
-            /*byte[]
-             * 做base64编码 得到string
-             * 把string 传到数据库
-             */
-           
+            if (openfile.ShowDialog() == DialogResult.OK) {
+                FileStream fsread = new FileStream(openfile.FileName, FileMode.Open);//数据流
+                byte[] buffer = new byte[fsread.Length];
+                fsread.Read(buffer, 0, (int)fsread.Length);
+                string a = Convert.ToBase64String(buffer);
+                Image image = Image.FromStream(fsread);
+                Graphics graf = Graphics.FromImage(image);
+                graf.DrawImage(image, 0, 0, pictureBox1.Width, pictureBox1.Height);
+                pictureBox1.Image = image;
+                pictureBox1.Show();
+            }
         }
     }
+}
 
 

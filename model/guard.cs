@@ -47,7 +47,7 @@ namespace model {
         [DisplayName("专业技能 ")]
         public string major_skill { get; set; }
         [DisplayName("培训记录")]
-        public string dtraining_record { get; set; }
+        public string training_record { get; set; }
         #endregion
 
 
@@ -55,7 +55,7 @@ namespace model {
         public void Insert() {
             string insertsql = string.Format(sql.GuardInsert, name, phone, certificate_num, service_area, ID_card, army, r_and_p,
                 address, Hukou, contact_way, political_status, part_of_company, serviceunit, h_and_w, sex, soldier, approve_time, date_of_birth,
-                major_skill, dtraining_record);
+                major_skill, training_record);
 
             conn.OpenConnection();
             conn.ExecuteNonQuery(insertsql);

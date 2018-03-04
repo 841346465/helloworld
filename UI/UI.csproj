@@ -66,11 +66,11 @@
       <DependentUpon>login.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Report.cs">
+    <Compile Include="guardReport.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Report.Designer.cs">
-      <DependentUpon>Report.cs</DependentUpon>
+    <Compile Include="guardReport.Designer.cs">
+      <DependentUpon>guardReport.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="CompanyRegister.resx">
       <DependentUpon>CompanyRegister.cs</DependentUpon>
@@ -91,8 +91,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Report.resx">
-      <DependentUpon>Report.cs</DependentUpon>
+    <EmbeddedResource Include="guardReport.resx">
+      <DependentUpon>guardReport.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\DataSources\model.company.datasource" />
     <None Include="Properties\DataSources\model.guard.datasource" />

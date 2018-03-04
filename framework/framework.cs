@@ -31,7 +31,7 @@ namespace framework {
 
 		#region 测试时代码，正式会删掉
 		private void addMenu() {
-			listMenu.Add(new model.menu { id = 1, name = "节点1", dllName = "UI.dll", fieldName = "UI.CompanyRegister", canOpen = true, parentId = 0, showOrder = 1 });
+			listMenu.Add(new model.menu { id = 1, name = "节点1", dllName = "UI.dll", fieldName = "UI.CompanyRegister", canOpen = false, parentId = 0, showOrder = 1 });
 			listMenu.Add(new model.menu { id = 2, name = "节点2", parentId = 0, showOrder = 1 });
 			listMenu.Add(new model.menu { id = 3, name = "节点3", parentId = 0, showOrder = 2 });
 			listMenu.Add(new model.menu {
