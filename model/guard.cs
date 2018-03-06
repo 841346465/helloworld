@@ -43,7 +43,7 @@ namespace MODEL {
 		[DisplayName("核发年份")]
 		public string approve_time { get; set; }
 		[DisplayName("出生日期 ")]
-		public string date_of_birth { get; set; }
+		public DateTime date_of_birth { get; set; }
 		[DisplayName("专业技能 ")]
 		public string major_skill { get; set; }
 		[DisplayName("培训记录")]
