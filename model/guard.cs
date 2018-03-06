@@ -48,6 +48,10 @@ namespace MODEL {
 		public string major_skill { get; set; }
 		[DisplayName("培训记录")]
 		public string training_record { get; set; }
+		[DisplayName("照片")]
+		public System.Drawing.Image image { get; set; }
+		[DisplayName("照片的base64编码")]
+		public string base64FromImage { get; set; }
 		#endregion
 	}
 }

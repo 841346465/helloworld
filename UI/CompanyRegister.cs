@@ -21,7 +21,11 @@ namespace UI {
 		//录入
 		private void btnRegister_Click(object sender, EventArgs e) {
 			bindingSource1.EndEdit();
-			new MODEL.ORM.orm().Insert(myCompany);
+			try {
+				new MODEL.ORM.orm().Insert(myCompany);
+			} catch (ArgumentException err) {
+				MessageBox.Show(err.Message, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			}
 		}
 		//查询
 		private void btnQuery_Click(object sender, EventArgs e) {

@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="COM\baseReport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="COM\baseReport.Designer.cs">
+      <DependentUpon>baseReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="CompanyRegister.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -74,6 +80,9 @@
     </Compile>
     <EmbeddedResource Include="CompanyRegister.resx">
       <DependentUpon>CompanyRegister.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="COM\baseReport.resx">
+      <DependentUpon>baseReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GuardRegister.resx">
       <DependentUpon>GuardRegister.cs</DependentUpon>
@@ -112,6 +121,7 @@
       <Name>MODEL</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -13,7 +13,7 @@ namespace framework {
 		public privManager() {
 			InitializeComponent();
 		}
-		
+
 		public MODEL.menu menu { get; set; }
 
 		public void SetMode(string mode) {
@@ -45,34 +45,50 @@ namespace framework {
 					}
 				}
 				if (listClassName.Count == 0) {
-					MessageBox.Show(menu.dllName+"中不包含窗口组件，无法创建菜单");
+					MessageBox.Show(menu.dllName + "中不包含窗口组件，无法创建菜单");
 					menu.fieldName = string.Empty;
 					lblHint.Text = "未选择组件";
 					return;
 				}
 				privManagerPopup popup = new privManagerPopup();
 				popup.SetList(listClassName);
-				popup.ShowDialog();
-				lblHint.Text = popup.GetSelected;
-				menu.fieldName = popup.GetSelected;
+				if (popup.ShowDialog() == DialogResult.OK) {
+					lblHint.Text = popup.GetSelected;
+					menu.fieldName = popup.GetSelected;
+				}
 			}
 		}
 
 		private void btnSave_Click(object sender, EventArgs e) {
-			if (string.IsNullOrEmpty(menu.fieldName)) {
-				MessageBox.Show("请选择组件");
-				return;
+			if (canOpen.Checked) {
+				if (string.IsNullOrEmpty(menu.fieldName)) {
+					MessageBox.Show("请选择组件");
+					return;
+				}
+				if (string.IsNullOrEmpty(tbxMenuName.Text)) {
+					MessageBox.Show("请输入菜单名");
+					return;
+				}
 			}
-			if (string.IsNullOrEmpty(tbxMenuName.Text)) {
-				MessageBox.Show("请输入菜单名");
-				return;
-			} else {
-				menu.name = tbxMenuName.Text;
-				MODEL.ORM.orm ormInstance = new MODEL.ORM.orm();
-				//ormInstance.BeginTransaction();
-				ormInstance.Insert<MODEL.menu>(menu);
-				//ormInstance.Commit();
-				this.DialogResult = DialogResult.OK;
+			menu.name = tbxMenuName.Text;
+			menu.canOpen = canOpen.Checked;
+			MODEL.ORM.orm ormInstance = new MODEL.ORM.orm();
+			//ormInstance.BeginTransaction();
+			ormInstance.Insert<MODEL.menu>(menu);
+			//ormInstance.Commit();
+			this.DialogResult = DialogResult.OK;
+		}
+
+		private void canOpen_CheckedChanged(object sender, EventArgs e) {
+			browse.Enabled = canOpen.Checked;
+			if (!string.IsNullOrEmpty(menu.fieldName)) {
+				if (DialogResult.OK == MessageBox.Show("如果选中“添加目录”，您之前选择了dll组件将不起作用，是否继续？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning)) {
+					menu.dllName = string.Empty;
+					menu.fieldName = string.Empty;
+					lblHint.Text = "为选择组件";
+				} else {
+					canOpen.Checked = !canOpen.Checked;
+				}
 			}
 		}
 	}

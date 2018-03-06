@@ -58,22 +58,39 @@ namespace framework {
 			} else {
 				currentMenu = new menu { parentId = 0 };
 			}
-			var newMenu = currentMenu.Clone() as menu;
+			menu newMenu = new menu();
+
 			switch ((sender as ToolStripMenuItem).Name) {
 				case "addSibMenu":
+					newMenu.parentId = currentMenu.parentId;
 					newMenu.showOrder = currentMenu.showOrder + 1;
 					break;
 				case "addSubMenu":
 					if (treeView1.Nodes.Count == 0) { newMenu.showOrder = 0; } else {
-						newMenu.showOrder = (treeView1.SelectedNode.LastNode.Tag as menu).showOrder + 1;
+						newMenu.parentId = currentMenu.id;
+						newMenu.showOrder = treeView1.SelectedNode.LastNode == null ?
+							0 : (treeView1.SelectedNode.LastNode.Tag as menu).showOrder + 1;
 					}
 					break;
 				case "manageMenu":
+					newMenu = currentMenu.Clone() as menu;
 					break;
+				case "deleteMenu":
+					newMenu = currentMenu.Clone() as menu;
+					MODEL.ORM.orm ormInstance = new MODEL.ORM.orm();
+					ormInstance.Delete(newMenu);
+					treeView1.Nodes.Clear();
+					addNode();
+					initNode();
+					return;
 				default: break;
 			}
 			privManager1.menu = newMenu;
-			privManager1.ShowDialog();
+			if (privManager1.ShowDialog() == DialogResult.OK) {
+				treeView1.Nodes.Clear();
+				addNode();
+				initNode();
+			}
 		}
 
 		private void treeView1_MouseClick(object sender, MouseEventArgs e) {

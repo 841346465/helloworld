@@ -4,23 +4,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
+using System.Data.Common;
+using MySql.Data.MySqlClient;
+using System.Configuration;
 
 namespace MODEL.ORM {
 	public class orm {
-		public orm() {
-			db = DBhelper.databaseManager.GetInstance();
+		public orm() : this((dbType)Enum.Parse(typeof(dbType), ConfigurationManager.ConnectionStrings[2].ProviderName, true),
+			 ConfigurationManager.ConnectionStrings[2].Name) {
 		}
-		DBhelper.databaseManager db;
 
-		public void Open() { db.Open(); }
-		public void Close() { db.Close(); }
-		public void BeginTransaction() { db.BeginTransaction(); }
-		public void Commit() { db.Commit(); }
-		public void Rollback() { db.Rollback(); }
-		public int ExecuteNonQuery(string sql) {
-			return db.ExecuteNonQuery(sql);
+		public orm(dbType type, string connectionName) {
+			if (!ormInstancePool.ContainsKey(connectionName)) {
+				lock (ormInstancePool) {
+					if (!ormInstancePool.ContainsKey(connectionName)) {
+						dbHelperInstance = new dbHelper();
+						dbHelperInstance.SetConnection(type, connectionName);
+						ormInstancePool.Add(connectionName, dbHelperInstance);
+					}
+				}
+			} else {
+				dbHelperInstance = ormInstancePool[connectionName];
+			}
 		}
-		//
+
+		private static readonly Dictionary<string, dbHelper> ormInstancePool = new Dictionary<string, dbHelper>();
+
+		private dbHelper dbHelperInstance;
+
+		public void Open() { dbHelperInstance.Open(); }
+		public void Close() { dbHelperInstance.Close(); }
+		public void BeginTransaction() { dbHelperInstance.BeginTransaction(); }
+		public void Commit() { dbHelperInstance.Commit(); }
+		public void Rollback() { dbHelperInstance.Rollback(); }
 
 		#region create
 		public int Insert<T>(T data) {
@@ -42,7 +58,7 @@ namespace MODEL.ORM {
 							values.Add(intValue.ToString());
 						} else {
 							if (ORM.sql.InjectionDefend(property.GetValue(data, null).ToString())) {
-							values.Add("\'" + property.GetValue(data, null) + "\'");
+								values.Add("\'" + property.GetValue(data, null) + "\'");
 							}
 						}
 					}
@@ -50,7 +66,7 @@ namespace MODEL.ORM {
 			}
 			string sql = "INSERT INTO " + table + "(" + string.Join(",", columns) + ")" + "VALUES" + "(" + string.Join(",", values) + ")";
 
-			return db.ExecuteNonQuery(sql);
+			return dbHelperInstance.ExecuteNonQuery(sql);
 		}
 		#endregion
 
@@ -100,7 +116,7 @@ namespace MODEL.ORM {
 				}
 			}
 			sql += (string.Join(",", sets) + where);
-			return db.ExecuteNonQuery(sql);
+			return dbHelperInstance.ExecuteNonQuery(sql);
 		}
 		#endregion
 
@@ -115,7 +131,7 @@ namespace MODEL.ORM {
 		public T First<T>(sql sql) {
 			try {
 				T result = default(T);
-				System.Data.Common.DbDataReader reader = db.GetReader(sql.GetSql());
+				System.Data.Common.DbDataReader reader = dbHelperInstance.GetReader(sql.GetSql());
 				if (reader.Read()) {
 					Type type = typeof(T);
 					if (type.IsPrimitive || type == typeof(string) || type == typeof(DateTime) || type.IsEnum) {
@@ -139,14 +155,14 @@ namespace MODEL.ORM {
 				}
 				return result;
 			} catch {
-				throw ;
+				throw;
 			} finally {
 				Close();
 			}
 		}
 		public List<T> Fetch<T>(sql sql) {
 			try {
-				System.Data.Common.DbDataReader reader = db.GetReader(sql.GetSql());
+				System.Data.Common.DbDataReader reader = dbHelperInstance.GetReader(sql.GetSql());
 				List<T> list = new List<T>();
 				Type type = typeof(T);
 				if (type.IsPrimitive || type == typeof(string) || type == typeof(DateTime) || type.IsEnum) {
@@ -173,8 +189,8 @@ namespace MODEL.ORM {
 					}
 				}
 				return list;
-			} catch  {
-				throw ;
+			} catch {
+				throw;
 			} finally {
 				Close();
 			}
@@ -191,15 +207,22 @@ namespace MODEL.ORM {
 				if (attributesHelper.IsPrimary(type, property)) {
 					sql += (attributesHelper.GetColumnName(property) + "=");
 					if (property.PropertyType.IsPrimitive) {
-						sql += (data.ToString() + ";");
+						sql += (property.GetValue(data) + ";");
 					} else {
-						sql += ("\'" + data.ToString() + "\';");
+						sql += ("\'" + property.GetValue(data) + "\';");
 					}
 				}
 			}
-			return db.ExecuteNonQuery(sql);
+			return dbHelperInstance.ExecuteNonQuery(sql);
 		}
 		#endregion
 
+	}
+
+	public enum dbType {
+		Mysql = 0,
+		Sqlite,
+		Oracle,
+		SqlServer
 	}
 }

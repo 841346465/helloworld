@@ -20,16 +20,13 @@ namespace MODEL.ORM {
 
 		// 用正则表达式过滤sql注入风险，如果用户有输入下面关键词则过滤掉
 		public static bool InjectionDefend(string value) {
-			string SqlStr = @"and|or|exec|execute|insert|select|delete|update|alter|create|drop|count|\/\*|\*\/|chr|char|asc|mid|substring|master|truncate|declare|xp_cmdshell|restore|backup|net +user|net +localgroup +administrators";
-			try {
-				if ((value != null) && (value != String.Empty)) {
-					Regex Regex = new Regex(SqlStr, RegexOptions.IgnoreCase);
-					if (true == Regex.IsMatch(value)) {
-						return false;
-					}
+			string SqlStr = @"\/\*|\*\/|;|'";
+
+			if ((value != null) && (value != String.Empty)) {
+				Regex Regex = new Regex(SqlStr, RegexOptions.IgnoreCase);
+				if (true == Regex.IsMatch(value)) {
+					throw new ArgumentException("输入不允许包含下列字符之一：\n注释/*、反注释*/、单引号' 和分号;");
 				}
-			} catch {
-				return false;
 			}
 			return true;
 		}
