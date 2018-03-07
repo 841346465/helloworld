@@ -4,11 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using MODEL.ORM;
 
 namespace MODEL {
-	public class guard {
-		#region  数据
-		[DisplayName("姓名")]
+    [PrimaryKey("id", autoIncrement = true)]
+    public class guard {
+        #region  数据
+        [DisplayName("主键")]
+        public string id { get; set; }
+        [DisplayName("姓名")]
 		public string name { get; set; }
 		[DisplayName("电话号码")]
 		public string phone { get; set; }
@@ -41,15 +45,13 @@ namespace MODEL {
 		[DisplayName("是否专业军人")]
 		public string soldier { get; set; }
 		[DisplayName("核发年份")]
-		public string approve_time { get; set; }
+		public DateTime approve_time { get; set; }
 		[DisplayName("出生日期 ")]
 		public DateTime date_of_birth { get; set; }
 		[DisplayName("专业技能 ")]
 		public string major_skill { get; set; }
 		[DisplayName("培训记录")]
 		public string training_record { get; set; }
-		[DisplayName("照片")]
-		public System.Drawing.Image image { get; set; }
 		[DisplayName("照片的base64编码")]
 		public string base64FromImage { get; set; }
 		#endregion

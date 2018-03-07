@@ -88,7 +88,7 @@ namespace framework {
 					var tabPage = new TabPage();
 					tabPage.Name = menu.fieldName;
 					tabPage.Controls.Add(currentForm);
-					tabPage.Text = currentForm.Text;
+					tabPage.Text = menu.name; 
 					tabControl1.TabPages.Add(tabPage);
 					tabControl1.SelectedTab = tabPage;
 					currentForm.Show();

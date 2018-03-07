@@ -47,48 +47,48 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="compayReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="compayReport.Designer.cs">
+      <DependentUpon>compayReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="COM\baseReport.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="COM\baseReport.Designer.cs">
       <DependentUpon>baseReport.cs</DependentUpon>
     </Compile>
-    <Compile Include="CompanyRegister.cs">
+    <Compile Include="companyRegister.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CompanyRegister.Designer.cs">
-      <DependentUpon>CompanyRegister.cs</DependentUpon>
+    <Compile Include="companyRegister.Designer.cs">
+      <DependentUpon>companyRegister.cs</DependentUpon>
     </Compile>
-    <Compile Include="GuardRegister.cs">
+    <Compile Include="guardRegister.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GuardRegister.Designer.cs">
-      <DependentUpon>GuardRegister.cs</DependentUpon>
+    <Compile Include="guardRegister.Designer.cs">
+      <DependentUpon>guardRegister.cs</DependentUpon>
     </Compile>
-    <Compile Include="login.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="login.Designer.cs">
-      <DependentUpon>login.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="guardReport.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="guardReport.Designer.cs">
       <DependentUpon>guardReport.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="CompanyRegister.resx">
-      <DependentUpon>CompanyRegister.cs</DependentUpon>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="companyRegister.resx">
+      <DependentUpon>companyRegister.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="compayReport.resx">
+      <DependentUpon>compayReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="COM\baseReport.resx">
       <DependentUpon>baseReport.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GuardRegister.resx">
-      <DependentUpon>GuardRegister.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="login.resx">
-      <DependentUpon>login.cs</DependentUpon>
+    <EmbeddedResource Include="guardRegister.resx">
+      <DependentUpon>guardRegister.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -100,9 +100,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="guardReport.resx">
-      <DependentUpon>guardReport.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="Properties\DataSources\model.company.datasource" />
     <None Include="Properties\DataSources\model.guard.datasource" />
     <None Include="Properties\Settings.settings">
@@ -121,7 +118,9 @@
       <Name>MODEL</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

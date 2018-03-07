@@ -10,45 +10,23 @@ using System.Windows.Forms;
 using MODEL.ORM;
 
 namespace UI {
-    public partial class guardReport : COM.baseReport {
-        public guardReport() {
+    public partial class compayReport : COM.baseReport {
+        public compayReport() {
             InitializeComponent();
         }
 
-        List<MODEL.guard> guardList=new List<MODEL.guard>();
+        List<MODEL.company> companyList = new List<MODEL.company>();
         protected override void Query() {
             var ormInstance = new orm();
             sql sqlInstance = new sql();
-            sqlInstance.Select(@"		
-        id,		
-		name,
-		phone,
-		certificate_num,
-		service_area,
-		ID_card,
-		army,
-		r_and_p,
-		address,
-		Hukou,
-		contact_way,
-		political_status,
-		part_of_company,
-		serviceunit,
-		h_and_w,
-		sex,
-		soldier,
-		approve_time,
-		date_of_birth,
-		major_skill,
-		training_record,
-		base64FromImage").From("guard");
-            guardList = ormInstance.Fetch<MODEL.guard>(sqlInstance);
-            dataGridView1.DataSource = guardList;
+            sqlInstance.Select("*").From("company");
+            companyList = ormInstance.Fetch<MODEL.company>(sqlInstance);
+            dataGridView1.DataSource = companyList;
             base.Query();
         }
 
         protected override void New() {
-            new guardRegister { isNew = true }.ShowDialog();
+            new companyRegister { isNew = true }.ShowDialog();
             Query();
         }
 
@@ -56,9 +34,9 @@ namespace UI {
             if (dataGridView1.SelectedRows.Count == 0) {
                 MessageBox.Show("未选择修改数据");
             } else {
-                var guardRegisterForm = new guardRegister { isNew = false };
-                guardRegisterForm.SetData((dataGridView1.DataSource as List<MODEL.guard>)[dataGridView1.SelectedRows[0].Index]);
-                guardRegisterForm.ShowDialog();
+                var companyRegisterForm = new companyRegister { isNew = false };
+                companyRegisterForm.SetData((dataGridView1.DataSource as List<MODEL.company>)[dataGridView1.SelectedRows[0].Index]);
+                companyRegisterForm.ShowDialog();
                 Query();
             }
         }
@@ -70,7 +48,7 @@ namespace UI {
                 if (MessageBox.Show("是否删除当前行", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Information)
                     == DialogResult.OK) {
                     var ormInstance = new orm();
-                    dataGridView1.DataSource = ormInstance.Delete((dataGridView1.DataSource as List<MODEL.guard>)[dataGridView1.SelectedRows[0].Index]);
+                    dataGridView1.DataSource = ormInstance.Delete((dataGridView1.DataSource as List<MODEL.company>)[dataGridView1.SelectedRows[0].Index]);
                     Query();
                 } else {
                     MessageBox.Show("取消删除了");
@@ -79,7 +57,7 @@ namespace UI {
         }
 
         protected override void Filter(string filter, string key) {
-            dataGridView1.DataSource = guardList.Where(x => {
+            dataGridView1.DataSource = companyList.Where(x => {
                 Type type = x.GetType();
                 PropertyInfo[] properties = type.GetProperties();
                 foreach (PropertyInfo property in properties) {

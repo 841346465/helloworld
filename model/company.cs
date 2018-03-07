@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
-using System.Threading.Tasks;
+using MODEL.ORM;
 
 namespace MODEL {
-	public class company {
-		#region 数据
-		[DisplayName("公司名称")]
-		public string sg_company_name { get; set; }
+    [PrimaryKey("id", autoIncrement = true)]
+    public class company {
+        #region 数据
+        [DisplayName("主键")]
+        public string id { get; set; }
+
+        [DisplayName("公司名称")]
+        public string sg_company_name { get; set; }
 
 		[DisplayName("许可证")]
 		public string liscence { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace UI
 {
-    partial class GuardRegister
+    partial class guardRegister
     {
         /// <summary>
         /// 必需的设计器变量。

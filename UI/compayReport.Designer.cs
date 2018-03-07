@@ -1,5 +1,5 @@
 ﻿namespace UI {
-    partial class guardReport {
+    partial class compayReport {
         /// <summary> 
         /// 必需的设计器变量。
         /// </summary>
@@ -23,8 +23,16 @@
         /// 使用代码编辑器修改此方法的内容。
         /// </summary>
         private void InitializeComponent() {
-            components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // compayReport
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(802, 550);
+            this.Name = "compayReport";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
