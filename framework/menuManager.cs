@@ -62,10 +62,12 @@ namespace framework {
 
 			switch ((sender as ToolStripMenuItem).Name) {
 				case "addSibMenu":
+					privManager1.SetMode(true);
 					newMenu.parentId = currentMenu.parentId;
 					newMenu.showOrder = currentMenu.showOrder + 1;
 					break;
 				case "addSubMenu":
+					privManager1.SetMode(true);
 					if (treeView1.Nodes.Count == 0) { newMenu.showOrder = 0; } else {
 						newMenu.parentId = currentMenu.id;
 						newMenu.showOrder = treeView1.SelectedNode.LastNode == null ?
@@ -73,6 +75,7 @@ namespace framework {
 					}
 					break;
 				case "manageMenu":
+					privManager1.SetMode(false);
 					newMenu = currentMenu.Clone() as menu;
 					break;
 				case "deleteMenu":

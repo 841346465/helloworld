@@ -15,17 +15,9 @@ namespace framework {
 		}
 
 		public MODEL.menu menu { get; set; }
-
-		public void SetMode(string mode) {
-			switch (mode) {
-				case "addSibMenu":
-					break;
-				case "addSubMenu":
-					break;
-				case "manageMenu":
-					break;
-				default: break;
-			}
+		private bool isNewOrModify;
+		public void SetMode(bool isNewOrModify) {
+			this.isNewOrModify = isNewOrModify;
 		}
 
 		private void browse_Click(object sender, EventArgs e) {
@@ -73,9 +65,12 @@ namespace framework {
 			menu.name = tbxMenuName.Text;
 			menu.canOpen = canOpen.Checked;
 			MODEL.ORM.orm ormInstance = new MODEL.ORM.orm();
-			//ormInstance.BeginTransaction();
-			ormInstance.Insert<MODEL.menu>(menu);
-			//ormInstance.Commit();
+			if (isNewOrModify) {
+				ormInstance.Insert<MODEL.menu>(menu);
+			} else {
+				ormInstance.Update<MODEL.menu>(menu);
+			}
+
 			this.DialogResult = DialogResult.OK;
 		}
 
@@ -89,6 +84,15 @@ namespace framework {
 				} else {
 					canOpen.Checked = !canOpen.Checked;
 				}
+			}
+		}
+
+		private void privManager_Shown(object sender, EventArgs e) {
+			if (!isNewOrModify) {
+				tbxMenuName.Text = menu.name;
+				lblHint.Text = menu.fieldName;
+				canOpen.Checked = menu.canOpen;
+				cannotOpen.Checked = !menu.canOpen;
 			}
 		}
 	}

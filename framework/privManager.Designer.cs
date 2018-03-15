@@ -164,6 +164,7 @@
 			this.MinimumSize = new System.Drawing.Size(526, 515);
 			this.Name = "privManager";
 			this.Text = "菜单权限";
+			this.Shown += new System.EventHandler(this.privManager_Shown);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
