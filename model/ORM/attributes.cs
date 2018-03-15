@@ -24,6 +24,14 @@ namespace MODEL.ORM {
 		public string Value { get; protected set; }
 	}
 
+	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
+	public class VisableAttribute : Attribute {
+		public VisableAttribute(bool visable) {
+			this.visable = visable;
+		}
+		public bool visable = true;
+	}
+
 	[AttributeUsage(AttributeTargets.Class)]
 	public class PrimaryKeyAttribute : Attribute {
 		public PrimaryKeyAttribute(string primaryKey) {
@@ -32,7 +40,6 @@ namespace MODEL.ORM {
 
 		public string Value { get; protected set; }
 		public bool autoIncrement = false;
-
 	}
 
 	public class attributesHelper {

@@ -12,21 +12,35 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{6563AF18-A076-46AD-BBEE-E3992FAA66DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6563AF18-A076-46AD-BBEE-E3992FAA66DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6563AF18-A076-46AD-BBEE-E3992FAA66DA}.Debug|x86.ActiveCfg = Debug|x86
+		{6563AF18-A076-46AD-BBEE-E3992FAA66DA}.Debug|x86.Build.0 = Debug|x86
 		{6563AF18-A076-46AD-BBEE-E3992FAA66DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6563AF18-A076-46AD-BBEE-E3992FAA66DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6563AF18-A076-46AD-BBEE-E3992FAA66DA}.Release|x86.ActiveCfg = Release|x86
+		{6563AF18-A076-46AD-BBEE-E3992FAA66DA}.Release|x86.Build.0 = Release|x86
 		{49481B24-0A33-432E-9B2D-04840F3CC421}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{49481B24-0A33-432E-9B2D-04840F3CC421}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49481B24-0A33-432E-9B2D-04840F3CC421}.Debug|x86.ActiveCfg = Debug|x86
+		{49481B24-0A33-432E-9B2D-04840F3CC421}.Debug|x86.Build.0 = Debug|x86
 		{49481B24-0A33-432E-9B2D-04840F3CC421}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49481B24-0A33-432E-9B2D-04840F3CC421}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49481B24-0A33-432E-9B2D-04840F3CC421}.Release|x86.ActiveCfg = Release|x86
+		{49481B24-0A33-432E-9B2D-04840F3CC421}.Release|x86.Build.0 = Release|x86
 		{D6325116-3583-4E86-ABFF-62DEC6595693}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D6325116-3583-4E86-ABFF-62DEC6595693}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6325116-3583-4E86-ABFF-62DEC6595693}.Debug|x86.ActiveCfg = Debug|x86
+		{D6325116-3583-4E86-ABFF-62DEC6595693}.Debug|x86.Build.0 = Debug|x86
 		{D6325116-3583-4E86-ABFF-62DEC6595693}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6325116-3583-4E86-ABFF-62DEC6595693}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6325116-3583-4E86-ABFF-62DEC6595693}.Release|x86.ActiveCfg = Release|x86
+		{D6325116-3583-4E86-ABFF-62DEC6595693}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
